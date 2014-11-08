@@ -1,0 +1,45 @@
+doctype html
+html
+	head
+		title=title
+		link(rel="stylesheet", href="css/bootstrap.min.css")
+		link(rel="stylesheet", href="css/custom.css")
+	body
+		div.header
+			nav(class="navbar navbar-inverse" role="navigation")
+				div.container-fluid
+					div.navbar-hearder
+						button(type="button" class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#bs-example-navbar-navbar-collapse-1")
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a(class="navbar-brand" href="/") College Clubs MN
+
+						//Collect the nav links and other content for toggling
+						div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+							ul(class="nav navbar-nav")
+								li
+									a(href="/universities") Universities
+							ul(class="nav navbar-nav navbar-right")
+								li.active
+									a(href="/signin") Sign in
+								li
+									a(href="/signup") Sign up
+
+		div.content
+			div.jumbotron
+				form(class="form-horizontal" role="form")
+					div.form-group
+						label(for="inputEmail3" class="col-sm-2 control-label") Email
+						div.col-sm-3
+							input(type="email" class="form-control" id="inputEmail3" placeholder="Email")
+					div.form-group
+						label(for="inputPassword3" class="col-sm-2 control-label") Password
+						div.col-sm-3
+							input(type="password" class="form-control" id="inputpassword3" placeholder="Password")					
+					div.form-group
+						div(class="col-sm-offset-2 col-sm-10")
+							button(type="submit" class="btn btn-default") Submit
+
+		div.footer
