@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		title=title
+		link(rel="stylesheet", href="css/bootstrap.min.css")
+		link(rel="stylesheet", href="css/custom.css")
+	body
+		div.header
+			nav(class="navbar navbar-inverse", role="navigation", id="navigation_bar")
+				div.container-fluid
+					//Brand and toggle get grouped for better mobile display
+					div.navbar-header
+						button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+							span(class="sr-only") Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a(class="navbar-brand", href="/") College Clubs MN
+					//Collect the nav links and other contents for toggling
+					div(class="collapse navbar-collapse", id="bs-example-navbar-collapse-1")
+						ul(class="nav navbar-nav")
+							li
+								a(href="universities") Universities
+						ul(class="nav navbar-nav navbar-right")
+							li
+								a(href="/signin") Sign in
+							li
+								a(href="signup") Sign up								
+		div.content
+			div.jumbotron
+				div.container
+					p="College Clubs MN is platform designed to connect students and student organizations of different state-owned universities in Minnesota."
+		div.footer
