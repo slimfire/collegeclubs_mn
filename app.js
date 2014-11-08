@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride());
 app.use(express.Router());
-app.use(serveStatic(__dirname + '/public'));
+app.use(serveStatic(__dirname + '/public_assets'));
 
 if('development' == app.get('env')){
 	app.use(errorHandler({dumpExceptions:true,showStack:true}));
@@ -27,9 +27,9 @@ if('production' == app.get('env')){
 	app.use(errorHandler());
 }
 
-//Routes
+//routes
 app.get('/', routes.indexResponseHandler);
-app.get('/login', routes.loginResponseHandler);
+app.get('/signin', routes.signinResponseHandler);
 app.get('/signup', routes.signupResponseHandler);
 
 app.listen(3000);
