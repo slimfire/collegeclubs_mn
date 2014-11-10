@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		title=title
+		link(rel="stylesheet" href="css/bootstrap.min.css")
+		link(rel="stylesheet" href="css/custom.css")
+	body
+		div.header
+			nav(class="navbar navbar-inverse" role="navigation")
+				div.container-fluid
+					div.navbar-hearder
+						button(type="button" class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#bs-example-navbar-navbar-collapse-1")
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a(class="navbar-brand" href="/") College Clubs MN
+
+						//Collect the nav links and other content for toggling
+						div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+							ul(class="nav navbar-nav")
+								li
+									a(href="/universities") Universities
+							ul(class="nav navbar-nav navbar-right")
+								li
+									a(href="/signin") Sign in
+								li
+									a(href="/signup") Sign up
+
+		div.container
+			h1="Welcome to College clubs! :)"
+
+		div.footer
