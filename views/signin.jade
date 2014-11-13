@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title=title
+		title="Sign in"
 		link(rel="stylesheet", href="css/bootstrap.min.css")
 		link(rel="stylesheet", href="css/custom.css")
 	body
@@ -33,6 +33,7 @@ html
 					div.form-group
 						label(for="inputUsername" class="col-sm-2 control-label") Username
 						div.col-sm-3
+							label(class="label label-danger") #{error_message}
 							input(name="username" type="text" class="form-control" id="inputUsername" placeholder="Username" required=true)
 					div.form-group
 						label(for="inputPassword" class="col-sm-2 control-label") Password

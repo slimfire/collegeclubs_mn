@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title=title
+		title=username
 		link(rel="stylesheet" href="css/bootstrap.min.css")
 		link(rel="stylesheet" href="css/custom.css")
 	body
@@ -23,11 +23,20 @@ html
 									a(href="/universities") Universities
 							ul(class="nav navbar-nav navbar-right")
 								li
-									a(href="/signin") Sign in
-								li
-									a(href="/signup") Sign up
+									a(href="/profile") #{username}
 
 		div.container
-			h1="Welcome to College clubs! :)"
-
+			div.jumbotron
+				div.row
+					div(class="col-sm-6 col-md-4")
+						div.thumbnail
+							img(src="images/default_user.jpg" alt="user" class="img-circle")
+							div.caption
+								h2
+									| #{username}
+								h4
+									| #{university}
+								h4
+									| From #{hometown}
+					h1="Hooray, Welcome to College Clubs!"
 		div.footer
