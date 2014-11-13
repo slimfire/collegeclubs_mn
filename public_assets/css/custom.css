@@ -7,3 +7,11 @@ body{
 	background-color: #A7BF8F;
 	margin-top: 150px;
 }
+
+.caption{
+	text-align: center;
+}
+
+.thumbnail{
+	background-color: #A7BF8F;
+}
