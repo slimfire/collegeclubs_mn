@@ -6,8 +6,8 @@ mongoose.connect("mongodb://db_username:db_password@ds033699.mongolab.com:33699/
 var userSchema = new schema({
 	username : String,
 	password : String,
-	hometown : String,
-	age : Number
+	university : String,
+	hometown : String	
 }, {collection : 'user'});
 
 var user_model = mongoose.model('user', userSchema);
