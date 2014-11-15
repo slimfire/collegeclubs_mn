@@ -72,7 +72,7 @@ passport.use('signup_local_strategy',new localStrategy(
 				new_user.save(function(err){
 					if(err)
 					{
-						console.log(err);
+						throw err;
 					}
 				});
 				user = new_user;    //Assigned the variable new_user to user to authematically serialize the new user.			
@@ -106,6 +106,10 @@ passport.deserializeUser(function(id,done){
 app.get('/', routes.indexResponseHandler);
 app.get('/signin', routes.signinResponseHandler);
 app.get('/signup', routes.signupResponseHandler);
+app.get('/signout', function(req, res){
+	req.logOut();
+	res.redirect('/');
+});
 app.get('/profile', routes.userProfileResponseHandler);
 app.get('/signin_error', routes.signinErrorResponseHandler);
 app.get('/signup_error', routes.signupErrorResponseHandler);
