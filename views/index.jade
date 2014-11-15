@@ -22,10 +22,17 @@ html
 							li
 								a(href="universities") Universities
 						ul(class="nav navbar-nav navbar-right")
-							li
-								a(href="/signin") Sign in
-							li
-								a(href="signup") Sign up								
+							- var isSignedIn = 'false'
+							if(isSignedIn=='true')
+								li
+									a(href="/signout") Signout
+								li
+									a(href="/profile") #{username}
+							else
+								li
+									a(href="/signin") Sign in
+								li
+									a(href="/signup") Sign up
 		div.content
 			div.jumbotron
 				div.container
