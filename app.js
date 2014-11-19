@@ -9,7 +9,8 @@ var methodOverride = require('method-override');;
 var serveStatic = require('serve-static');
 var errorHandler = require('errorhandler');
 var routes = require('./routes/routes.js');
-var user_model = require('./models/user_model.js');
+var user_models = require('./models/user_model.js');
+var rest_api = require('./routes/rest_api.js');
 var app = express();
 
 //configuration
@@ -33,7 +34,7 @@ if('production' == app.get('env')){
 //user authentication on sign in
 passport.use('signin_local_strategy', new localStrategy(
 	function(username,password,done){
-		user_model.findOne({username: username}, function(err, user){
+		user_models.findOne({username: username}, function(err, user){
 			if(err)
 				{
 					return(done(err));
@@ -56,14 +57,14 @@ passport.use('signup_local_strategy',new localStrategy(
 	{passReqToCallback: true},
 	function(req, username, password, done)
 	{
-		user_model.findOne({username:username},function(err, user){
+		user_models.findOne({username:username},function(err, user){
 			if(err)
 			{
 				return done(err);
 			}
 			if(user == null)
 			{
-				var new_user = new user_model({
+				var new_user = new user_models({
 					username: username,
 					password: password,
 					university: req.body.university,
@@ -97,7 +98,7 @@ passport.serializeUser(function(user, done){
 
 //deserialize  user by quering user's document id
 passport.deserializeUser(function(id,done){
-	user_model.findById(id, function(err, user){
+	user_models.findById(id, function(err, user){
 		done(err,user);
 	})
 });
@@ -124,5 +125,8 @@ app.post('/signup',
 		{successRedirect:'/profile',
 		 failureRedirect:'/signup_error'
 		}));
+
+//ReST API
+app.get('/api/users', rest_api.getUsersResponseHandler);
 
 app.listen(3000);
