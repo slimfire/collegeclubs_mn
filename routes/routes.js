@@ -1,8 +1,9 @@
 var user_model = require('../models/user_model.js');
-var serialized_user = require('../app.js');
+var app = require('../app.js');
+
 
 exports.indexResponseHandler = function (req, res){
-	res.render('index', {title: "College Clubs MN", isSignedIn: false});
+	res.render('index', {title: "College Clubs MN", isSignedIn: app.isSignedIn, username : app.username});
 }
 
 exports.signinResponseHandler = function (req, res){
@@ -14,12 +15,18 @@ exports.signupResponseHandler = function(req, res){
 }
 
 exports.userProfileResponseHandler = function(req, res){
-	res.render('user_profile',{
-		username: serialized_user.username,
-		university: serialized_user.university,
-		hometown: serialized_user.hometown,
-		isSignedIn: true
-	});
+	if(app.isSignedIn == true)
+	{
+		res.render('user_profile',{
+			username: app.username,
+			university: app.university,
+			hometown: app.hometown
+		});
+	}
+	else
+	{
+		res.send('The page you are trying to access is not available!');
+	}
 }
 
 exports.signinErrorResponseHandler = function(req, res){
