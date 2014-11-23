@@ -22,12 +22,11 @@ html
 							li
 								a(href="universities") Universities
 						ul(class="nav navbar-nav navbar-right")
-							- var isSignedIn = 'false'
-							if(isSignedIn=='true')
+							if(isSignedIn)
 								li
-									a(href="/signout") Signout
+									a(href="/signout") #{username}
 								li
-									a(href="/profile") #{username}
+									a(href="/profile") Signout
 							else
 								li
 									a(href="/signin") Sign in
