@@ -1,6 +1,6 @@
 var user_model = require('../models/user_model.js');
-
-//ReST API
+var app = require('../app.js');
+//APIs
 exports.getUsersResponseHandler= function(req, res){
 		user_model.find({},{_id:0, password:0, __v:0},
 				function(err, user)
@@ -41,8 +41,38 @@ exports.postUserResponseHandler = function(req, res){
 			}
 			if(user.username == req.body.username)
 			{
-				return(res.send("Entered username is already taked. Please try anotherone!"));
+				return(res.send("Entered username is already taken. Please try anotherone!"));
 			}
 		}
 	});
+}
+
+exports.updateUsername = function(req, res){
+		if(app.isSignedIn == true)
+		{
+			user_model.findOne({username: req.body.username}, function(err, user){
+				if(user != null)
+				{
+					user_model.where({username: req.body.username}).setOptions({overwrite: true})
+						.update({$set: {username: req.body.newUsername}}, function(err){
+							if(err)
+							{
+								throw err;
+							}
+							else
+							{
+								res.send('User updated');
+							}
+					});
+				}
+				else
+				{
+					res.send("Failed to change username. Entered username does not exists!")
+				}
+			});
+		}
+		else
+		{
+			res.send('Sorry, you are not signed in to change username!')
+		}
 }
