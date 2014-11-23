@@ -12,6 +12,7 @@ var routes = require('./routes/routes.js');
 var user_model = require('./models/user_model.js');
 var rest_api = require('./routes/rest_api.js');
 var app = express();
+var isSignedIn = false;
 
 //configuration
 app.set('views', __dirname + '/views');
@@ -90,6 +91,7 @@ passport.use('signup_local_strategy',new localStrategy(
 //serialize user and export the the user information so that the router update the view
 passport.serializeUser(function(user, done){
 	done(null, user.id);
+	exports.isSignedIn = true;
 	exports._id = user.id;
 	exports.username = user.username;
 	exports.university = user.university;
@@ -129,5 +131,6 @@ app.post('/signup',
 //ReST API
 app.get('/api/users', rest_api.getUsersResponseHandler);
 app.post('/api/create_user', rest_api.postUserResponseHandler);
+app.put('/api/change_username', rest_api.updateUsername);
 
 app.listen(3000);
