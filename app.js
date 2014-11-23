@@ -77,7 +77,7 @@ passport.use('signup_local_strategy',new localStrategy(
 						throw err;
 					}
 				});
-				user = new_user;    //Assigned the variable new_user to user to authematically serialize the new user.			
+				user = new_user;    //Assigned the variable new_user to user to automatically serialize the new user.			
 				return(done(null, user));
 			}
 			if(user.username == username)
@@ -88,7 +88,7 @@ passport.use('signup_local_strategy',new localStrategy(
 	}
 ));
 
-//serialize user and export the the user information so that the router update the view
+//serialize user and export the the user information so that the router updates the view
 passport.serializeUser(function(user, done){
 	done(null, user.id);
 	exports.isSignedIn = true;
@@ -112,6 +112,7 @@ app.get('/signup', routes.signupResponseHandler);
 app.get('/signout', function(req, res){
 	req.logOut();
 	res.redirect('/');
+	exports.isSignedIn= false;
 });
 app.get('/profile', routes.userProfileResponseHandler);
 app.get('/signin_error', routes.signinErrorResponseHandler);
