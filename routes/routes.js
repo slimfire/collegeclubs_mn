@@ -18,6 +18,8 @@ exports.userProfileResponseHandler = function(req, res){
 	if(app.isSignedIn == true)
 	{
 		res.render('user_profile',{
+			firstName: app.firstName,
+			lastName: app.lastName,
 			username: app.username,
 			university: app.university,
 			hometown: app.hometown
@@ -30,9 +32,9 @@ exports.userProfileResponseHandler = function(req, res){
 }
 
 exports.signinErrorResponseHandler = function(req, res){
-	res.render('signin',{error_message: "The entered username and password does not match. Please try again."})
+	res.render('signin',{error_message: "The entered e-mail address and password does not match. Please try again."})
 }
 
 exports.signupErrorResponseHandler = function(req, res){
-	res.render('signup',{error_message: 'The entered username already exists. Please try again.'})
+	res.render('signup',{error_message: 'Sorry, the entered e-mail already in use.'})
 }
