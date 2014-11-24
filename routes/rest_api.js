@@ -1,5 +1,6 @@
 var user_model = require('../models/user_model.js');
 var app = require('../app.js');
+
 //APIs
 exports.getUsersResponseHandler= function(req, res){
 		user_model.find({},{_id:0, password:0, __v:0},
@@ -18,7 +19,7 @@ exports.getUsersResponseHandler= function(req, res){
 	};
 
 exports.postUserResponseHandler = function(req, res){
-	user_model.findOne({username: req.body.username}, function(err, user){
+	user_model.findOne({email: req.body.email}, function(err, user){
 		if(err)
 		{
 			throw err;
@@ -27,10 +28,14 @@ exports.postUserResponseHandler = function(req, res){
 		{
 			if(user == null)
 			{
-				var newUser = new user_model({"username": req.body.username,
-								"password": req.body.password,
-								"university": req.body.university,
-								"hometown": req.body.hometown});
+				var newUser = new user_model({
+								"username" : req.body.username,
+								"firstName" : req.body.firstName,
+								"lastName" : req.body.lastName,
+								"university" : req.body.university,	
+								"email" : req.body.email,
+								"hometown" : req.body.hometown,
+								"password" : req.body.password});
 				newUser.save(function(err){
 					if(err)
 						{
@@ -39,9 +44,9 @@ exports.postUserResponseHandler = function(req, res){
 				});
 				return (res.send('New user added!'));
 			}
-			if(user.username == req.body.username)
+			if(user.email == req.body.email)
 			{
-				return(res.send("Entered username is already taken. Please try anotherone!"));
+				return(res.send("Entered e-mail address is already linked with a college clubs accout!"));
 			}
 		}
 	});
@@ -50,10 +55,10 @@ exports.postUserResponseHandler = function(req, res){
 exports.updateUsername = function(req, res){
 		if(app.isSignedIn == true)
 		{
-			user_model.findOne({username: req.body.username}, function(err, user){
+			user_model.findOne({username: app.username, email: app.email}, function(err, user){
 				if(user != null)
 				{
-					user_model.where({username: req.body.username}).setOptions({overwrite: true})
+					user_model.where({username: user.username}).setOptions({overwrite: true})
 						.update({$set: {username: req.body.newUsername}}, function(err){
 							if(err)
 							{
