@@ -33,9 +33,9 @@ if('production' == app.get('env')){
 }
 
 //user authentication on sign in
-passport.use('signin_local_strategy', new localStrategy(
-	function(username,password,done){
-		user_model.findOne({username: username}, function(err, user){
+passport.use('signin_local_strategy', new localStrategy({usernameField: 'email'},
+	function(email,password,done){
+		user_model.findOne({email: email}, function(err, user){
 			if(err)
 				{
 					return(done(err));
@@ -58,7 +58,7 @@ passport.use('signup_local_strategy',new localStrategy(
 	{passReqToCallback: true},
 	function(req, username, password, done)
 	{
-		user_model.findOne({username:username},function(err, user){
+		user_model.findOne({email:req.body.email},function(err, user){
 			if(err)
 			{
 				return done(err);
@@ -66,10 +66,13 @@ passport.use('signup_local_strategy',new localStrategy(
 			if(user == null)
 			{
 				var new_user = new user_model({
-					username: username,
-					password: password,
-					university: req.body.university,
-					hometown: req.body.hometown
+					username : req.body.username,
+					firstName : req.body.firstName,
+					lastName : req.body.lastName,
+					university : req.body.university,	
+					email : req.body.email,
+					hometown : req.body.hometown,
+					password : req.body.password
 				});
 				new_user.save(function(err){
 					if(err)
@@ -80,11 +83,11 @@ passport.use('signup_local_strategy',new localStrategy(
 				user = new_user;    //Assigned the variable new_user to user to automatically serialize the new user.			
 				return(done(null, user));
 			}
-			if(user.username == username)
+			if(user.email == email)
 				{
 					return(done(null, false));
-				}		
-		});		
+				}
+		});
 	}
 ));
 
@@ -93,6 +96,9 @@ passport.serializeUser(function(user, done){
 	done(null, user.id);
 	exports.isSignedIn = true;
 	exports._id = user.id;
+	exports.firstName = user.firstName;
+	exports.lastName = user.lastName;
+	exports.email = user.email;
 	exports.username = user.username;
 	exports.university = user.university;
 	exports.hometown = user.hometown;
