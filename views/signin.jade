@@ -31,10 +31,10 @@ html
 			div.jumbotron
 				form(method="post" action="/signin" class="form-horizontal" role="form")
 					div.form-group
-						label(for="inputUsername" class="col-sm-2 control-label") Username
+						label(for="inputEmail" class="col-sm-2 control-label") E-mail
 						div.col-sm-3
 							label(class="label label-danger") #{error_message}
-							input(name="username" type="text" class="form-control" id="inputUsername" placeholder="Username" required=true)
+							input(name="email" type="email" class="form-control" id="inputEmail" placeholder="Yohannes.Seifu@live.bemidjistate.edu" required=true)
 					div.form-group
 						label(for="inputPassword" class="col-sm-2 control-label") Password
 						div.col-sm-3
