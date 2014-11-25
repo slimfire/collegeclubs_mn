@@ -3,20 +3,20 @@ var app = require('../app.js');
 
 //APIs
 exports.getUsersResponseHandler= function(req, res){
-		user_model.find({},{_id:0, password:0, __v:0},
-				function(err, user)
+	user_model.find({},{_id:0, password:0, __v:0},
+			function(err, user)
+			{
+				if(err)
 				{
-					if(err)
-					{
-						throw err;
-					}
-					else
-					{
-						res.json(user);
-					}
+					throw err;
 				}
-			);
-	};
+				else
+				{
+					return(res.json(user));
+				}
+			}
+		);
+};
 
 exports.postUserResponseHandler = function(req, res){
 	user_model.findOne({email: req.body.email}, function(err, user){
@@ -66,18 +66,36 @@ exports.updateUsername = function(req, res){
 							}
 							else
 							{
-								res.send('User updated');
+								return (res.send('User updated'));
 							}
 					});
 				}
 				else
 				{
-					res.send("Failed to change username. Entered username does not exists!")
+					return (res.send("Failed to change username. Entered username does not exists!"));
 				}
 			});
 		}
 		else
 		{
-			res.send('Sorry, you are not signed in to change username!')
+			return ((res.send('Sorry, you are not signed in to change username!'));
 		}
+}
+
+exports.delete_user = function(req, res){
+		user_model.findOne({email: req.body.email}, function(err, user){
+			if(err)
+			{
+				throw err;
+			}
+			if(user != null)
+			{
+				user.remove();
+				return(res.send('user Deleted :) !'));
+			}
+			if(user = null)
+			{
+				return(res.send('user does not exist! :('));
+			}
+		});
 }
