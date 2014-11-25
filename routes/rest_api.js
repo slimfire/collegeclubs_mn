@@ -16,7 +16,24 @@ exports.getUsersResponseHandler= function(req, res){
 				}
 			}
 		);
-};
+}
+
+exports.getUserByEmailAddressResponseHandler = function(req, res){
+	user_model.findOne({email: req.param('user_email')}, {_id:0, __v:0, password:0}, function(err, user){
+		if(err)
+		{
+			throw err;
+		}
+		else if(user != null)
+		{
+			return(res.json(user));
+		}
+		else
+		{
+			return(res.send('Sorry, No user found by the entered email address!'));
+		}
+	});
+}
 
 exports.postUserResponseHandler = function(req, res){
 	user_model.findOne({email: req.body.email}, function(err, user){
@@ -78,7 +95,7 @@ exports.updateUsername = function(req, res){
 		}
 		else
 		{
-			return ((res.send('Sorry, you are not signed in to change username!'));
+			return (res.send('Sorry, you are not signed in to change username!'));
 		}
 }
 
