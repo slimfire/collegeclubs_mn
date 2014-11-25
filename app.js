@@ -139,5 +139,6 @@ app.post('/signup',
 app.get('/api/users', rest_api.getUsersResponseHandler);
 app.post('/api/create_user', rest_api.postUserResponseHandler);
 app.put('/api/change_username', rest_api.updateUsername);
+app.delete('/api/delete_user', rest_api.delete_user);
 
 app.listen(3000);
