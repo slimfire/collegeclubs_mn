@@ -9,7 +9,9 @@ var methodOverride = require('method-override');;
 var serveStatic = require('serve-static');
 var errorHandler = require('errorhandler');
 var routes = require('./routes/routes.js');
-var user_model = require('./models/user_model.js');
+var models = require('./models/user_model.js');
+var user_model = models.user_model;
+var club_model = models.club_model;
 var rest_api = require('./routes/rest_api.js');
 var app = express();
 var isSignedIn = false;
@@ -135,7 +137,8 @@ app.post('/signup',
 		 failureRedirect:'/signup_error'
 		}));
 
-//ReST API
+//APIs
+app.get('/clubs', routes.clubs);
 app.get('/api/users', rest_api.getUsersResponseHandler);
 app.get('/api/users/:user_email', rest_api.getUserByEmailAddressResponseHandler);
 app.post('/api/create_user', rest_api.postUserResponseHandler);
