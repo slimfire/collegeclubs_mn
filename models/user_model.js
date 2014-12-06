@@ -13,6 +13,13 @@ var userSchema = new schema({
 	password : String	
 }, {collection : 'user'});
 
+var clubSchema = new schema({
+	clubName: String,	
+	existsAt: [String]
+}, {collection: 'clubs'});
+
+var club_model = mongoose.model('clubs', clubSchema);
 var user_model = mongoose.model('user', userSchema);
 
-module.exports = user_model;
+exports.club_model = club_model;
+exports.user_model = user_model;
