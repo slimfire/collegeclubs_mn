@@ -5,7 +5,8 @@ body{
 
 .jumbotron{
 	background-color: #A7BF8F;
-	margin-top: 150px;
+	margin-top: 10%;
+	margin-bottom: 10%;
 }
 
 .caption{
