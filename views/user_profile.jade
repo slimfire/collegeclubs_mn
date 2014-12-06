@@ -20,7 +20,7 @@ html
 						div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
 							ul(class="nav navbar-nav")
 								li
-									a(href="/universities") Universities
+									a(href="/clubs") Clubs
 							ul(class="nav navbar-nav navbar-right")
 								li
 									a(href="/profile") #{username}
@@ -34,6 +34,8 @@ html
 						div.thumbnail
 							img(src="images/default_user.jpg" alt="user" class="img-circle")
 							div.caption
+								form(method="post" name="upload_profile_piture" action="/profile")
+									button(name="upload_profile_picture") Upload Picture
 								h2
 									| #{username}
 								h4
