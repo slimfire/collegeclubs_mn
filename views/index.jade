@@ -18,9 +18,10 @@ html
 						a(class="navbar-brand", href="/") College Clubs MN
 					//Collect the nav links and other contents for toggling
 					div(class="collapse navbar-collapse", id="bs-example-navbar-collapse-1")
-						ul(class="nav navbar-nav")
-							li
-								a(href="/clubs") Clubs
+						if(isSignedIn)
+							ul(class="nav navbar-nav")
+								li
+									a(href="/clubs") Clubs
 						ul(class="nav navbar-nav navbar-right")
 							if(isSignedIn)
 								li
