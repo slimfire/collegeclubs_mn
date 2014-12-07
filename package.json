@@ -1,7 +1,10 @@
 {
-  "name": "Nodeplay",
+  "name": "collegeclubs_mn",
   "private": "true",
   "verson": "0.0.1",
+  "engines": {
+    "node": ">=0.10.3"
+  },
   "dependencies": {
     "body-parser": "^1.9.2",
     "connect": "^3.3.1",
