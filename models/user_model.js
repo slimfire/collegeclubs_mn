@@ -18,8 +18,14 @@ var clubSchema = new schema({
 	existsAt: [String]
 }, {collection: 'clubs'});
 
+var pendingRequestsSchema = new schema({
+	clubName: String,
+	existsAt: [String]
+}, {collection: 'pendingRequests'});
+
 var club_model = mongoose.model('clubs', clubSchema);
 var user_model = mongoose.model('user', userSchema);
+var pending_requests_model = mongoose.model('pendingRequests', pendingRequestsSchema);
 
 exports.club_model = club_model;
 exports.user_model = user_model;
