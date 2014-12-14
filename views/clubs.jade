@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title=username
+		title="Clubs"
 		link(rel="stylesheet" href="css/bootstrap.min.css")
 		link(rel="stylesheet" href="css/custom.css")
 	body
@@ -19,11 +19,13 @@ html
 						//Collect the nav links and other content for toggling
 						div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
 							ul(class="nav navbar-nav")
-								li
+								li.active
 									a(href="/clubs") Clubs
 							ul(class="nav navbar-nav navbar-right")
 								li
 									a(href="/profile") #{username}
+								li
+									a(href="/settings") Settings
 								li
 									a(href="/signout") Sign out
 
