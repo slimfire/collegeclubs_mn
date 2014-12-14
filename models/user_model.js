@@ -25,7 +25,8 @@ var pendingRequestsSchema = new schema({
 
 var club_model = mongoose.model('clubs', clubSchema);
 var user_model = mongoose.model('user', userSchema);
-var pending_requests_model = mongoose.model('pendingRequests', pendingRequestsSchema);
+var pending_requests_model = mongoose.model('pendingRequests ', pendingRequestsSchema);
 
 exports.club_model = club_model;
 exports.user_model = user_model;
+exports.pending_requests_model = pending_requests_model;
