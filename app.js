@@ -125,7 +125,7 @@ app.get('/signout', function(req, res){
 app.get('/profile', routes.userProfileResponseHandler);
 app.get('/signin_error', routes.signinErrorResponseHandler);
 app.get('/signup_error', routes.signupErrorResponseHandler);
-
+app.get('/settings', routes.settingsResponseHandler);
 app.post('/signin',
 	passport.authenticate('signin_local_strategy', {successRedirect: '/profile',
 													failureRedirect: '/signin_error'
@@ -137,8 +137,10 @@ app.post('/signup',
 		 failureRedirect:'/signup_error'
 		}));
 
+app.post('/settings', routes.addClubResponseHandler);
+
 //APIs
-app.get('/clubs', routes.clubs);
+app.get('/clubs', routes.clubsResponseHandler);
 app.get('/api/users', rest_api.getUsersResponseHandler);
 app.get('/api/users/:user_email', rest_api.getUserByEmailAddressResponseHandler);
 app.post('/api/create_user', rest_api.postUserResponseHandler);
