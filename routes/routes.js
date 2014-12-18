@@ -100,26 +100,33 @@ exports.addClubResponseHandler = function(req, res){
 							}
 						);									
 					}
-				else
+				if(requests.clubName == req.body.clubName)
 				{
-					requests.existsAt.push(req.body.universityName);
-				}
+					var universities = requests.existsAt;
+					if(universities.indexOf(req.body.universityName) == -1)
+					{
+						universities.push(req.body.universityName);
+						pending_requests_model
+							.where({clubName: req.body.clubName})
+							.setOptions({overwrite: true})
+							.update( {$set : {existsAt: universities}}, function(err){
+								if(err)
+								{
+									throw err;
+								}
+								res.send('Your request have successfully been submitted to the adminstrator and will be posted soon!');
+							});
+					}
+					else
+					{
+						res.send('Your request have successfully been submitted to the adminstrator and will be posted soon!');
+					}
+				}	
 			}					
 		});
-		res.send('Your request have successfully been submitted to the adminstrator and will be posted soon!');
 	}
 	else
 	{
 		res.send("Page not available!")
 	}
-}
-
-exports.adminClubsResponseHandler = function(req, res){
-	pending_requests_model.find({}, function(err, requests){
-		res.render('clubs', {clubs: requests})
-	});
-}
-
-exports.adminResponseHandler = function(req, res){
-	res.render('admin');
 }
