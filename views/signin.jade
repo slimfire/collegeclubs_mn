@@ -26,17 +26,32 @@ html
 
 		div.content
 			div.jumbotron
-				form(method="post" action="/signin" class="form-horizontal" role="form")
-					div.form-group
-						label(for="inputEmail" class="col-sm-2 control-label") E-mail
-						div.col-sm-3
-							label(class="label label-danger") #{error_message}
-							input(name="email" type="email" class="form-control" id="inputEmail" placeholder="Yohannes.Seifu@live.bemidjistate.edu" required=true)
-					div.form-group
-						label(for="inputPassword" class="col-sm-2 control-label") Password
-						div.col-sm-3
-							input(name="password" type="password" class="form-control" id="inputpassword" placeholder="Password" required=true)
-					div.form-group
-						div(class="col-sm-offset-2 col-sm-10")
-							button(type="submit" class="btn btn-default") Sign in!
+				if isAdmin
+					form(method="post" action="/admin" class="form-horizontal" role="form")
+						div.form-group
+							label(for="inputEmail" class="col-sm-2 control-label") E-mail
+							div.col-sm-3
+								label(class="label label-danger") #{error_message}
+								input(name="email" type="email" class="form-control" id="inputEmail" placeholder="Yohannes.Seifu@live.bemidjistate.edu" required=true)
+						div.form-group
+							label(for="inputPassword" class="col-sm-2 control-label") Password
+							div.col-sm-3
+								input(name="password" type="password" class="form-control" id="inputpassword" placeholder="Password" required=true)
+						div.form-group
+							div(class="col-sm-offset-2 col-sm-10")
+								button(type="submit" class="btn btn-default") Sign in!					
+				else
+					form(method="post" action="/signin" class="form-horizontal" role="form")
+						div.form-group
+							label(for="inputEmail" class="col-sm-2 control-label") E-mail
+							div.col-sm-3
+								label(class="label label-danger") #{error_message}
+								input(name="email" type="email" class="form-control" id="inputEmail" placeholder="Yohannes.Seifu@live.bemidjistate.edu" required=true)
+						div.form-group
+							label(for="inputPassword" class="col-sm-2 control-label") Password
+							div.col-sm-3
+								input(name="password" type="password" class="form-control" id="inputpassword" placeholder="Password" required=true)
+						div.form-group
+							div(class="col-sm-offset-2 col-sm-10")
+								button(type="submit" class="btn btn-default") Sign in!
 		div.footer
