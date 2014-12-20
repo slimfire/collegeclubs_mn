@@ -23,10 +23,18 @@ var pendingRequestsSchema = new schema({
 	existsAt: [String]
 }, {collection: 'pendingRequests'});
 
+var adminSchema = new schema({
+	email: String,
+	password: String},
+	{collection: 'adminstrator'}
+);
+
 var club_model = mongoose.model('clubs', clubSchema);
 var user_model = mongoose.model('user', userSchema);
 var pending_requests_model = mongoose.model('pendingRequests ', pendingRequestsSchema);
+var admin_model = mongoose.model('adminstrator', adminSchema);
 
 exports.club_model = club_model;
 exports.user_model = user_model;
 exports.pending_requests_model = pending_requests_model;
+exports.admin_model = admin_model;
