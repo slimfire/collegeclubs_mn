@@ -12,6 +12,7 @@ var routes = require('./routes/routes.js');
 var models = require('./models/user_model.js');
 var user_model = models.user_model;
 var club_model = models.club_model;
+var admin_model = models.admin_model;
 var rest_api = require('./routes/rest_api.js');
 var app = express();
 var isSignedIn = false;
@@ -93,6 +94,30 @@ passport.use('signup_local_strategy',new localStrategy(
 	}
 ));
 
+passport.use('admin_authentication_strategy', new localStrategy(
+	{usernameField: 'email'}, function(email, password, done){
+		admin_model.findOne({email: email}, function(err, user){
+			console.log(user);
+			if(err)
+			{
+				throw err;
+			}
+			if(user == null)
+			{
+				return(done(null, false));
+			}
+			if(user.email == email)
+			{
+				if(user.password == password)
+				{
+					return(done(null, user));
+				}
+				return(done(null, false));
+			}
+		});
+	}
+));
+
 //serialize user and export the the user information so that the router updates the view
 passport.serializeUser(function(user, done){
 	done(null, user.id);
@@ -120,12 +145,14 @@ app.get('/signup', routes.signupResponseHandler);
 app.get('/signout', function(req, res){
 	req.logOut();
 	res.redirect('/');
-	exports.isSignedIn= false;
+	exports.isSignedIn = false;
 });
 app.get('/profile', routes.userProfileResponseHandler);
 app.get('/signin_error', routes.signinErrorResponseHandler);
 app.get('/signup_error', routes.signupErrorResponseHandler);
 app.get('/settings', routes.settingsResponseHandler);
+app.get('/admin', routes.adminResponseHandler);
+//app.get('/admin/clubs',routes.adminClubsResponseHandler)
 app.post('/signin',
 	passport.authenticate('signin_local_strategy', {successRedirect: '/profile',
 													failureRedirect: '/signin_error'
@@ -138,6 +165,10 @@ app.post('/signup',
 		}));
 
 app.post('/settings', routes.addClubResponseHandler);
+
+app.post('/admin', 
+	passport.authenticate('admin_authentication_strategy', {successRedirect: '/', 
+															failureRedirect: '/admin'}));
 
 //APIs
 app.get('/clubs', routes.clubsResponseHandler);
