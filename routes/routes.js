@@ -130,3 +130,8 @@ exports.addClubResponseHandler = function(req, res){
 		res.send("Page not available!")
 	}
 }
+
+exports.adminResponseHandler = function(req, res){
+	res.render('signin', {isAdmin: 'true'});
+}
+
