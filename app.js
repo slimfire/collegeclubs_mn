@@ -97,7 +97,7 @@ passport.use('signup_local_strategy',new localStrategy(
 passport.use('admin_authentication_strategy', new localStrategy(
 	{usernameField: 'email'}, function(email, password, done){
 		admin_model.findOne({email: email}, function(err, user){
-			console.log(user);
+			var username = "Admin";
 			if(err)
 			{
 				throw err;
@@ -152,7 +152,8 @@ app.get('/signin_error', routes.signinErrorResponseHandler);
 app.get('/signup_error', routes.signupErrorResponseHandler);
 app.get('/settings', routes.settingsResponseHandler);
 app.get('/admin', routes.adminResponseHandler);
-//app.get('/admin/clubs',routes.adminClubsResponseHandler)
+app.get('/admin_index', routes.adminIndexResponseHandler);
+
 app.post('/signin',
 	passport.authenticate('signin_local_strategy', {successRedirect: '/profile',
 													failureRedirect: '/signin_error'
@@ -167,7 +168,7 @@ app.post('/signup',
 app.post('/settings', routes.addClubResponseHandler);
 
 app.post('/admin', 
-	passport.authenticate('admin_authentication_strategy', {successRedirect: '/', 
+	passport.authenticate('admin_authentication_strategy', {successRedirect: '/admin_index', 
 															failureRedirect: '/admin'}));
 
 //APIs
