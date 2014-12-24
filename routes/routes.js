@@ -135,3 +135,9 @@ exports.adminResponseHandler = function(req, res){
 	res.render('signin', {isAdmin: 'true'});
 }
 
+exports.adminIndexResponseHandler = function(req, res){
+	if(app.isSignedIn)
+	{
+		res.render('admin', {username: "Admin"});
+	}
+}
