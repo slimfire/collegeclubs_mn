@@ -1,0 +1,48 @@
+doctype html
+html
+	head
+		title="Clubs"
+		link(rel="stylesheet" href="css/bootstrap.min.css")
+		link(rel="stylesheet" href="css/custom.css")
+		script(src="js/client_side_supporting_functions.js" type="text/javascript")
+	body
+		div.header
+			nav(class="navbar navbar-inverse" role="navigation")
+				div.container-fluid
+					div.navbar-hearder
+						button(type="button" class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#bs-example-navbar-navbar-collapse-1")
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a(class="navbar-brand" href="/") College Clubs MN
+
+						//Collect the nav links and other content for toggling
+						div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+							ul(class="nav navbar-nav")
+								li.active
+									a(href="/clubs") Clubs
+							ul(class="nav navbar-nav navbar-right")
+								li
+									a(href="/profile") #{username}
+								li
+									a(href="/settings") Settings
+								li
+									a(href="/signout") Sign out
+
+		div.container
+			div.row
+				each club, index in clubs
+					div(class="col-sm-6 col-md-4")
+						div.thumbnail
+							img(src="images/default_club.jpg" alt="user" class="img-rounded")
+							div.caption
+								h4=clubs[index].clubName
+								input(type="button" class="btn btn-default" value="Approve" onclick="addVariables('choice', 'approve','clubName','" + clubs[index].clubName + "')")
+								input(type="button" class="btn btn-default" value="Decline" onclick="addVariables('choice','decline','clubName','" + clubs[index].clubName + "')")
+								h4="@"
+								span(class="badge")
+									each university, existsAtIndex in clubs[index].existsAt
+										h5=clubs[index].existsAt[existsAtIndex]
+
+		div.footer
