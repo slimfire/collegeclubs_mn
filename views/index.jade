@@ -24,8 +24,12 @@ html
 									a(href="/clubs") Clubs
 						ul(class="nav navbar-nav navbar-right")
 							if(isSignedIn)
-								li
-									a(href="/profile") #{username}
+								if(isAdmin == true)
+									li
+										a(href="/admin_index") Admin
+								else
+									li
+										a(href="/profile") #{username}								
 								li
 									a(href="/settings") Settings
 								li
