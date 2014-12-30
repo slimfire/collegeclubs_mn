@@ -4,7 +4,10 @@ var supporting_functions = require('./server_side_supporting_functions.js');
 var pending_requests_model = models.pending_requests_model;
 
 exports.indexResponseHandler = function (req, res){
-	res.render('index', {title: "College Clubs MN", isSignedIn: app.isSignedIn, username : app.username});
+	res.render('index', {title: "College Clubs MN", isSignedIn: app.isSignedIn, 
+													username : app.username,
+													isAdmin : app.isAdmin
+												});
 }
 
 exports.signinResponseHandler = function (req, res){
@@ -51,7 +54,7 @@ exports.clubsResponseHandler = function(req, res){
 			}
 			else
 			{
-				res.render('clubs', {clubs: clubsInfo, username: app.username});
+				res.render('clubs', {clubs: clubsInfo, username: app.username, isAdmin: app.isAdmin});
 ;			}
 		});
 	}
@@ -67,7 +70,8 @@ exports.settingsResponseHandler = function(req, res){
 		res.render('settings', {
 				firstName: app.firstName,
 				lastName: app.lastName,
-				username: app.username
+				username: app.username,
+				isAdmin: app.isAdmin
 			});
 	}
 	else
@@ -140,7 +144,7 @@ exports.adminSignInResponseHandler = function(req, res){
 exports.adminIndexResponseHandler = function(req, res){
 	if(app.isSignedIn)
 	{
-		res.render('admin', {username: "Admin"});
+		res.render('admin', {isAdmin: app.isAdmin});
 	}
 	else
 	{
