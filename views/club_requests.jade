@@ -31,6 +31,10 @@ html
 									a(href="/signout") Sign out
 
 		div.container
+			if (clubs.length == 0)
+				div.thumbnail
+					center
+						h1="There are no club requests!"
 			div.row
 				each club, index in clubs
 					div(class="col-sm-6 col-md-4")
