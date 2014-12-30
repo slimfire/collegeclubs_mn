@@ -94,6 +94,7 @@ passport.use('signup_local_strategy',new localStrategy(
 	}
 ));
 
+var isAdmin = false;
 passport.use('admin_authentication_strategy', new localStrategy(
 	{usernameField: 'email'}, function(email, password, done){
 		admin_model.findOne({email: email}, function(err, user){
@@ -110,6 +111,7 @@ passport.use('admin_authentication_strategy', new localStrategy(
 			{
 				if(user.password == password)
 				{
+					isAdmin = true;
 					return(done(null, user));
 				}
 				return(done(null, false));
@@ -122,6 +124,7 @@ passport.use('admin_authentication_strategy', new localStrategy(
 passport.serializeUser(function(user, done){
 	done(null, user.id);
 	exports.isSignedIn = true;
+	exports.isAdmin = isAdmin;
 	exports._id = user.id;
 	exports.firstName = user.firstName;
 	exports.lastName = user.lastName;
@@ -146,6 +149,7 @@ app.get('/signout', function(req, res){
 	req.logOut();
 	res.redirect('/');
 	exports.isSignedIn = false;
+	isAdmin = false;
 });
 app.get('/profile', routes.userProfileResponseHandler);
 app.get('/signin_error', routes.signinErrorResponseHandler);
