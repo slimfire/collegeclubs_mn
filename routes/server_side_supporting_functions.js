@@ -35,3 +35,14 @@ exports.updateAddress = function (key, value){
 		window.location.href = updatedAddress;
 	}
 }
+
+exports.fromASCIItoCharacter = function(string){
+	var newString = "";
+	while(string.indexOf('%20') != -1)
+	{
+		newString = string.substring(0, string.indexOf('%20'));
+		newString = newString + " " + string.substring(string.indexOf('%20') + 3, string.length);
+		string = newString;
+	}
+	return(string);
+}
