@@ -1,5 +1,6 @@
 var models = require('../models/user_model.js');
 var app = require('../app.js');
+var supporting_functions = require('./server_side_supporting_functions.js');
 var pending_requests_model = models.pending_requests_model;
 
 exports.indexResponseHandler = function (req, res){
@@ -78,16 +79,16 @@ exports.settingsResponseHandler = function(req, res){
 exports.addClubResponseHandler = function(req, res){
 	if(app.isSignedIn)
 	{
-		pending_requests_model.findOne({clubName: req.body.clubName}, function(err, requests){
+		models.pending_requests_model.findOne({clubName: req.body.clubName}, function(err, queriedData){
 			if(err)
 			{
 				throw err;
 			}
 			else
 			{
-				if(requests == null)
+				if(queriedData == null)
 				{
-					var request = new pending_requests_model({
+					var request = new models.pending_requests_model({
 							"clubName": req.body.clubName,
 							"existsAt": [req.body.universityName]
 						});
@@ -97,16 +98,17 @@ exports.addClubResponseHandler = function(req, res){
 								{
 									throw err;
 								}
+								res.send('Your request have successfully been submitted to the adminstrator and will be posted soon!');
 							}
 						);									
 					}
-				if(requests.clubName == req.body.clubName)
+				else if(queriedData.clubName == req.body.clubName)
 				{
-					var universities = requests.existsAt;
+					var universities = queriedData.existsAt;
 					if(universities.indexOf(req.body.universityName) == -1)
 					{
 						universities.push(req.body.universityName);
-						pending_requests_model
+						models.pending_requests_model
 							.where({clubName: req.body.clubName})
 							.setOptions({overwrite: true})
 							.update( {$set : {existsAt: universities}}, function(err){
@@ -131,7 +133,7 @@ exports.addClubResponseHandler = function(req, res){
 	}
 }
 
-exports.adminResponseHandler = function(req, res){
+exports.adminSignInResponseHandler = function(req, res){
 	res.render('signin', {isAdmin: 'true'});
 }
 
@@ -139,5 +141,79 @@ exports.adminIndexResponseHandler = function(req, res){
 	if(app.isSignedIn)
 	{
 		res.render('admin', {username: "Admin"});
+	}
+	else
+	{
+		res.send('Sorry, Page not available!');
+	}
+}
+
+exports.clubRequestResponseHandler = function(req, res){
+	if(app.isSignedIn)
+	{
+		models.pending_requests_model.find({},{_id:0, __v:0}, function(err, clubs){
+			if(err)
+			{
+				throw err;
+			}
+			if(req.originalUrl == '/requests')
+			{
+				res.render('club_requests', {clubs: clubs});
+			}
+			else
+			{
+				var variables = supporting_functions.variablesExtractor(req.originalUrl);
+				var choice = variables[0][1];
+				var clubName = supporting_functions.fromASCIItoCharacter(variables[1][1]);
+				if(choice == 'approve')
+				{
+					var clubData;
+					//Query DB and transfer it to the collection 'club' 
+					models.pending_requests_model.findOne({clubName: clubName}, {_id:0, __v:0},function(err, club){ 
+						if(err)
+						{
+							throw err;
+						}
+						clubData = club;
+					});
+
+					models.club_model.findOne({}, function(err){
+						if(err)
+						{
+							throw err;
+						}
+						var newClub = new models.club_model({"clubName": clubData.clubName, "existsAt": clubData.existsAt}); //<---- Error 			
+						newClub.save(function(err){
+							if(err)
+							{
+								throw err;
+							}
+							models.pending_requests_model.remove({clubName: clubName}, function(err){
+								if(err)
+								{
+									throw err;
+								}
+								res.send('Request Approved!');
+							});							
+						});						
+					});
+				}
+				else if(choice == 'decline')
+				{
+					//Delete Document from pending requests collection
+					models.pending_requests_model.remove({clubName: clubName}, function(err){
+						if(err)
+						{
+							throw err;
+						}
+						res.send('Club request removed!');
+					});					
+				}
+			}
+		});
+	}
+	else
+	{
+		res.send('Sorry, Page Not available!');
 	}
 }
