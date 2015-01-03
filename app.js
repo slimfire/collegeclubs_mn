@@ -158,6 +158,7 @@ app.get('/settings', routes.settingsResponseHandler);
 app.get('/admin', routes.adminSignInResponseHandler);
 app.get('/admin_index', routes.adminIndexResponseHandler);
 app.get('/requests', routes.clubRequestResponseHandler);
+app.get('/clubs_' + ':clubName', routes.clubProfileResponseHandler);
 
 app.post('/signin',
 	passport.authenticate('signin_local_strategy', {successRedirect: '/profile',
