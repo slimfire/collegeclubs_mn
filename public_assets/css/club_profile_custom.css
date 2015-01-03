@@ -1,0 +1,64 @@
+.title{
+	width: 100%;
+	text-align: center;
+	border: 3px solid #941515;
+	border-radius: 2px;
+	background-color: #941515;
+	color: #C7CECF;
+}
+
+.existsAt{
+	float:left;
+	width: 250px;
+	min-height: 400px;
+	background-color: #313634;
+	color: #C7CECF;
+
+}
+li{
+	list-style-type: none;
+}
+
+.news{
+	min-height: 400px;
+	margin-left: 250px;
+	background-color: #941515;
+	opacity: 0.8;
+	color: #C7CECF;
+}
+
+.footer{
+	width: 100%;
+	background-color: #5C0402;
+	color: #C7CECF;
+	bottom: 0;
+	position: absolute;
+}
+
+.update{
+	border: 3px solid #C7CECF;
+	border-radius: 6px;
+	margin-right: 25px;
+	margin-left: 25px;
+	background-color: #5C0402 ;
+	font-family: sans-serif;
+	opacity: 1;
+	margin-top: 10px;
+	
+}
+#subtitle{
+	font-family: sans-serif;
+	font-weight: bold;
+	padding: 5px;
+	margin : 5px;
+
+}
+
+#studentName{
+	padding-right: 10px;
+	padding-left: 10px;
+}
+#content{
+	padding-right: 10px;
+	padding-left: 10px;
+}
