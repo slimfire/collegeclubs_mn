@@ -15,12 +15,14 @@ var userSchema = new schema({
 
 var clubSchema = new schema({
 	clubName: String,	
-	existsAt: [String]
+	existsAt: [String],
+	news: [{clubName : String, studentName: String, content: String}] // [UniversityAt, postedBy, content]
 }, {collection: 'clubs'});
 
 var pendingRequestsSchema = new schema({
 	clubName: String,
-	existsAt: [String]
+	existsAt: [String],
+	news : []
 }, {collection: 'pendingRequests'});
 
 var adminSchema = new schema({
