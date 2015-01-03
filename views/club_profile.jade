@@ -1,0 +1,77 @@
+doctype html
+html
+	head
+		title=username
+		link(rel="stylesheet" href="css/bootstrap.min.css")
+		link(rel="stylesheet" href="css/custom.css")
+		link(rel="stylesheet" href="css/club_profile_custom.css")
+	body
+		div.wrapper
+			div.header
+				nav(class="navbar navbar-inverse" role="navigation")
+					div.container-fluid
+						div.navbar-hearder
+							button(type="button" class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#bs-example-navbar-navbar-collapse-1")
+								span.sr-only Toggle navigation
+								span.icon-bar
+								span.icon-bar
+								span.icon-bar
+							a(class="navbar-brand" href="/") College Clubs MN
+
+							//Collect the nav links and other content for toggling
+							div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+								ul(class="nav navbar-nav")
+									li
+										a(href="/clubs") Clubs
+								ul(class="nav navbar-nav navbar-right")
+									li
+										a(href="/profile") #{username}
+									li
+										a(href="/settings") Settings
+									li
+										a(href="/signout") Sign out
+
+			div.container
+				div.title
+					h3=clubName
+				nav.existsAt
+					br
+					center
+						span#subtitle
+							| Available
+							br 
+							| @
+					ul
+						each university, index in existsAt
+							li#university
+								b=existsAt[index]
+				div.news
+					if news != []
+						br
+						span#subtitle
+							| News accross Universities
+						br
+						each update, index in news
+							div.update
+								span#studentName
+									b=news[index].studentName
+									| :
+								span#content
+									h5=news[index].content
+					else
+						div.update
+							H4="No news feed available for" + clubName 
+			div.footer
+				footer
+					hr
+					ul
+						li
+							| Developer Info
+							ul
+								li="Yohannes Seifu"
+								li="Yohannes.Seifu@live.bemidjistate.edu"
+								li
+									a(href="yohazel.github.io") Website
+								li="Tel: 412-515-6923"
+								li="Bemidji, MN 56601"
+				
