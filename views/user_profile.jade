@@ -44,5 +44,18 @@ html
 									| #{university}
 								h4
 									| From #{hometown}
-					h1="Hooray, Welcome to College Clubs!"
+					h3="Hooray, Welcome to College Clubs!"
+				form(method="post" action="/addNews" class="form-horizontal" role="form")
+					div.form-group
+						label(for="inputClub" class="col-sm-2 control-label") Club
+						div.col-sm-3
+							input(name="clubName" type="text" class="form-control" id="inputEmail" placeholder="Accounting Club" required=true)
+					div.form-group
+						label(for="inputNews" class="col-sm-2 control-label") Update Status
+						div.col-sm-3
+							textarea(name="news" class="form-control" rows="3" id="inputNews" placeholder="Add your updates..." required=true)
+					div.form-group
+						div(class="col-sm-offset-2 col-sm-10")
+							button(type="submit" class="btn btn-default") Post!
+
 		div.footer
