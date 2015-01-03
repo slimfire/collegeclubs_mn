@@ -94,7 +94,8 @@ exports.addClubResponseHandler = function(req, res){
 				{
 					var request = new models.pending_requests_model({
 							"clubName": req.body.clubName,
-							"existsAt": [req.body.universityName]
+							"existsAt": [req.body.universityName],
+							"news" : []
 						});
 						request.save(function(err)
 							{
@@ -180,13 +181,16 @@ exports.clubRequestResponseHandler = function(req, res){
 						}
 						clubData = club;
 					});
-
+					console.log(clubData);
 					models.club_model.findOne({}, function(err){
 						if(err)
 						{
 							throw err;
 						}
-						var newClub = new models.club_model({"clubName": clubData.clubName, "existsAt": clubData.existsAt}); //<---- Error 			
+						var newClub = new models.club_model({"clubName": clubData.clubName,
+															 "existsAt": clubData.existsAt, 
+															 "news" : []
+															}); 
 						newClub.save(function(err){
 							if(err)
 							{
@@ -220,4 +224,43 @@ exports.clubRequestResponseHandler = function(req, res){
 	{
 		res.send('Sorry, Page Not available!');
 	}
+}
+
+exports.clubProfileResponseHandler = function(req, res){
+
+		var clubName = supporting_functions.fromASCIItoCharacter(req.param('clubName'));
+			models.club_model.findOne({clubName: clubName}, function(err, clubData){
+				if(err)
+				{
+					throw err;
+				}
+				//var clubData = JSON.stringify(clubData);
+				console.log(clubData.news);
+				res.render('club_profile', {
+											clubName : clubData.clubName,
+											news: clubData.news, 
+											existsAt: clubData.existsAt
+										});
+			});
+
+}
+
+exports.addNewsResponseHandler = function(req, res){
+	models.club_model.findOne({clubName : req.body.clubName}, function(err, clubData){
+		if(err)
+		{
+			throw err;
+		}
+		var updatedNews = clubData.news;
+		updatedNews.push({clubName: req.body.clubName, studentName: app.username, content : req.body.news});
+		models.club_model.where({clubName : req.body.clubName})
+			  .setOptions({overwrite: true})
+			  .update({$set : {news: updatedNews}}, function(err){
+			if(err)
+			{
+				throw err
+			}
+			res.redirect('/clubs_'+ req.body.clubName);
+		});
+	});
 }
