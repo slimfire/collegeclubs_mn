@@ -159,7 +159,7 @@ app.get('/admin', routes.adminSignInResponseHandler);
 app.get('/admin_index', routes.adminIndexResponseHandler);
 app.get('/requests', routes.clubRequestResponseHandler);
 app.get('/clubs_' + ':clubName', routes.clubProfileResponseHandler);
-
+app.post('/addNews', routes.addNewsResponseHandler);
 app.post('/signin',
 	passport.authenticate('signin_local_strategy', {successRedirect: '/profile',
 													failureRedirect: '/signin_error'
