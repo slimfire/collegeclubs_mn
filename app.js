@@ -86,7 +86,7 @@ passport.use('signup_local_strategy',new localStrategy(
 				user = new_user;    //Assigned the variable new_user to user to automatically serialize the new user.			
 				return(done(null, user));
 			}
-			if(user.email == email)
+			if(user.email == req.body.email)
 				{
 					return(done(null, false));
 				}
@@ -185,4 +185,4 @@ app.post('/api/create_user', rest_api.postUserResponseHandler);
 app.put('/api/change_username', rest_api.updateUsername);
 app.delete('/api/delete_user', rest_api.delete_user);
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
