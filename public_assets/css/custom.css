@@ -18,12 +18,27 @@ body{
 .thumbnail{
 	background-color: #941515;
 }
-.row{
-	opacity: 0.8;
-	color: #C7CECF;	
+.row{	
+	color: #C7CECF;
+}
+
+.caption h4{
+	color: #FFFFFF;
+}
+
+.caption h2{
+	color: #FFFFFF;
 }
 
 hr{
 	background-color: #313634;
 	height: 5px;
+}
+
+#adminRow{
+	margin-top: 125px;
+}
+
+#adminRow .caption{
+	color: #FFFFFF;
 }
