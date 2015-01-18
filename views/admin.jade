@@ -30,24 +30,20 @@ html
 									a(href="/signout") Sign out
 
 		div.container
-			div(class="panel panel-success")
-				div(class="panel panel-heading")
-					| Administrative tools
-				div(class="panel panel-body")
-					div.row
-						div(class="col-sm-6 col-md-4")
-							a(href="/requests")
-								div.thumbnail
-									div.caption
-										h3="Club request"
-						div(class="col-sm-6 col-md-4")
-							a(href="/api/users")
-								div.thumbnail
-									div.caption
-										h3="Users"
-						div(class="col-sm-6 col-md-4")
-							a(href="/api/users")
-								div.thumbnail
-									div.caption
-										h3="Universities"
+			div.row#adminRow
+				div(class="col-sm-6 col-md-4")
+					a(href="/requests")
+						div.thumbnail
+							div.caption
+								h3="Club request"
+				div(class="col-sm-6 col-md-4")
+					a(href="/api/users")
+						div.thumbnail
+							div.caption
+								h3="Users"
+				div(class="col-sm-6 col-md-4")
+					a(href="/api/users")
+						div.thumbnail
+							div.caption
+								h3="Universities"
 		div.footer
