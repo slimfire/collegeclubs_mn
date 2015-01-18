@@ -251,16 +251,23 @@ exports.addNewsResponseHandler = function(req, res){
 		{
 			throw err;
 		}
-		var updatedNews = clubData.news;
-		updatedNews.push({clubName: req.body.clubName, studentName: app.username, content : req.body.news});
-		models.club_model.where({clubName : req.body.clubName})
-			  .setOptions({overwrite: true})
-			  .update({$set : {news: updatedNews}}, function(err){
-			if(err)
-			{
-				throw err
-			}
-			res.redirect('/clubs_'+ req.body.clubName);
-		});
+		if(!clubData)
+		{
+			res.send("Picked club does not exists. :(");
+		}
+		else
+		{
+			var updatedNews = clubData.news;
+			updatedNews.push({clubName: req.body.clubName, studentName: app.username, content : req.body.news});
+			models.club_model.where({clubName : req.body.clubName})
+				  .setOptions({overwrite: true})
+				  .update({$set : {news: updatedNews}}, function(err){
+				if(err)
+				{
+					throw err
+				}
+				res.redirect('/clubs_'+ req.body.clubName);
+			});
+		}
 	});
 }
