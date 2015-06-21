@@ -3,10 +3,10 @@ var mongoose = require('mongoose'),
 
 mongoose.connect("mongodb://db_username:db_password@ds051750.mongolab.com:51750/heroku_app31755176");
 
-var clubModel = require('club.js'),
-	adminModel = require('admin.js'),
-	studentModel = require('student.js'),
-	newClubRequestModel = require('newClubRequest.js');
+var clubModel = require('./club.js'),
+	adminModel = require('./admin.js'),
+	studentModel = require('./student.js'),
+	newClubRequestModel = require('./newClubRequest.js');
 
 module.exports = {
 	clubModel : clubModel,
@@ -14,5 +14,3 @@ module.exports = {
 	studentModel : studentModel,
 	newClubRequestModel : newClubRequestModel
 };
-
-
