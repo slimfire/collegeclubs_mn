@@ -16,6 +16,6 @@ var studentSchema = new schema({
 	password : String	
 }, {collection : 'students'});
 
-var studentModel = mongoose.model('user', studentSchema);
+var studentModel = mongoose.model('student', studentSchema);
 
 module.exports = studentModel;
