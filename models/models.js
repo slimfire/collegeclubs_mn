@@ -6,11 +6,16 @@ mongoose.connect("mongodb://db_username:db_password@ds051750.mongolab.com:51750/
 var clubModel = require('./club.js'),
 	adminModel = require('./admin.js'),
 	studentModel = require('./student.js'),
-	newClubRequestModel = require('./newClubRequest.js');
+	postModel = require('./post.js'),
+	newClubRequestModel = require('./newClubRequest.js'),
+	clubRemovalRequestModel = require('./clubRemovalRequest.js');
+
 
 module.exports = {
 	clubModel : clubModel,
 	adminModel : adminModel,
 	studentModel : studentModel,
-	newClubRequestModel : newClubRequestModel
+	postModel : postModel,
+	newClubRequestModel : newClubRequestModel,
+	clubRemovalRequestModel :clubRemovalRequestModel
 };
