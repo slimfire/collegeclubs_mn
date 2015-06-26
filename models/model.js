@@ -19,6 +19,14 @@ Model.prototype.get = function(modelName, callback){
 	{
 		callback(models.newClubRequestModel);	
 	}
+	else if(modelName == 'clubRemovalRequestModel')
+	{
+		callback(models.clubRemovalRequestModel);	
+	}
+	else if(modelName == 'postModel')
+	{
+		callback(models.postModel);	
+	}	
 	else
 	{
 		callback("Error : The model name you are looking is not available. Check the spelling.");
