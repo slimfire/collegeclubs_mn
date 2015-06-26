@@ -25,6 +25,17 @@ Comment.prototype.removeComment = function(postId, commentId, callback) {
 	});
 };
 
+Comment.prototype.editComment = function(postId, commentId, comment, callback) {
+	var comments;
+	crud.read.readByParameter('postModel', {_id : postId}, function(post){
+		var doc = post.postBody.comments.id(commentId);
+		doc.commentBody = comment;
+		post.save(function(doc){
+			callback({status : 200});
+		});
+	});
+};
+
 module.exports = new Comment();
 
 		
