@@ -1,7 +1,7 @@
-var models = require('../models/user_model.js');
+
 var app = require('../app.js');
 var supporting_functions = require('./server_side_supporting_functions.js');
-var pending_requests_model = models.pending_requests_model;
+
 
 exports.indexResponseHandler = function (req, res){
 	res.render('index', {title: "College Clubs MN", isSignedIn: app.isSignedIn, 
