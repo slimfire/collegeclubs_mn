@@ -4,7 +4,7 @@ var Read = function(){}
 
 Read.prototype.readByParameter = function(modelName, query, callback){
 	model.get(modelName, function(model){
-		model.findOne(query, function(error, data){
+		model.findOne(query.query, query.options, function(error, data){
 			try{
 				callback(data);
 			}
