@@ -20,7 +20,7 @@ Authentication.prototype.signin = function(email, password, userType, callback){
 	var parameters = {email : email, password : password};
 	var response;
 	Authentication.prototype.getSigninType(userType, function(modelName){
-		crud.read(modelName, parameters, function(data){
+		crud.read.readByParameter(modelName, parameters, function(data){
 			if(!data)
 			{
 				response = {
@@ -63,11 +63,11 @@ Authentication.prototype.signup = function(email, password, username, firstName,
 		password : password
 	};
 
-	crud.read('studentModel', parameters, function(data){
+	crud.read.readByParameter('studentModel', parameters, function(data){
 		var response;
 		if(!data)
 		{
-			crud.create('studentModel', parameters , function(data){
+			crud.create.createByParameter('studentModel', parameters , function(data){
 				response = {
 					error : null,
 					response : {

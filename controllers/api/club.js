@@ -8,11 +8,11 @@ Club.prototype.addClub = function(clubName, universityAt, firstName, lastName, e
 		clubName: clubName,
 		universityAt: universityAt
 	};
-	crud.read('newClubRequestModel', parameters, function(data){
+	crud.read.readByParameter('newClubRequestModel', parameters, function(data){
 		if(!data)
 		{
 			parameters.leaders = [{firstName : firstName, lastName : lastName, email : email}];
-			crud.create('newClubRequestModel', parameters, function(data){
+			crud.create.createByParameter('newClubRequestModel', parameters, function(data){
 				response = {
 					error : null,
 					response : {
@@ -39,7 +39,7 @@ Club.prototype.removeClub = function(clubName, universityAt, firstName, lastName
 		clubName: clubName,
 		universityAt: universityAt
 	};
-	crud.read('clubModel', parameters, function(data){
+	crud.read.readByParameter('clubModel', parameters, function(data){
 		if(data)
 		{
 			parameters.requester = {
