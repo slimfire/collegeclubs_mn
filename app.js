@@ -3,16 +3,11 @@ var connect = require('connect');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
-var mongodb = require('mongodb');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');;
 var serveStatic = require('serve-static');
 var errorHandler = require('errorhandler');
 var routes = require('./routes/routes.js');
-var models = require('./models/user_model.js');
-var user_model = models.user_model;
-var club_model = models.club_model;
-var admin_model = models.admin_model;
 var rest_api = require('./routes/rest_api.js');
 var app = express();
 var isSignedIn = false;
@@ -36,7 +31,7 @@ if('production' == app.get('env')){
 }
 
 //user authentication on sign in
-passport.use('signin_local_strategy', new localStrategy({usernameField: 'email'},
+/*passport.use('signin_local_strategy', new localStrategy({usernameField: 'email'},
 	function(email,password,done){
 		user_model.findOne({email: email}, function(err, user){
 			if(err)
@@ -54,7 +49,7 @@ passport.use('signin_local_strategy', new localStrategy({usernameField: 'email'}
 			return(done(null,user));
 		});
 	}
-));
+));*/
 
 //user authentication on sign up
 passport.use('signup_local_strategy',new localStrategy(
@@ -121,18 +116,18 @@ passport.use('admin_authentication_strategy', new localStrategy(
 ));
 
 //serialize user and export the the user information so that the router updates the view
-passport.serializeUser(function(user, done){
-	done(null, user.id);
-	exports.isSignedIn = true;
-	exports.isAdmin = isAdmin;
-	exports._id = user.id;
-	exports.firstName = user.firstName;
-	exports.lastName = user.lastName;
-	exports.email = user.email;
-	exports.username = user.username;
-	exports.university = user.university;
-	exports.hometown = user.hometown;
-});
+// passport.serializeUser(function(user, done){
+// 	done(null, user.id);
+// 	exports.isSignedIn = true;
+// 	exports.isAdmin = isAdmin;
+// 	exports._id = user.id;
+// 	exports.firstName = user.firstName;
+// 	exports.lastName = user.lastName;
+// 	exports.email = user.email;
+// 	exports.username = user.username;
+// 	exports.university = user.university;
+// 	exports.hometown = user.hometown;
+// });
 
 //deserialize  user by quering user's document id
 passport.deserializeUser(function(id,done){
@@ -185,4 +180,6 @@ app.post('/api/create_user', rest_api.postUserResponseHandler);
 app.put('/api/change_username', rest_api.updateUsername);
 app.delete('/api/delete_user', rest_api.delete_user);
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, function(){
+	console.log('Magic happening on port 3000 :D . . . ');
+});
