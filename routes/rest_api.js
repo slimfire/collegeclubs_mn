@@ -1,6 +1,6 @@
-var models = require('../models/user_model.js');
-var user_model = models.user_model;
-var club_model = models.club_model;
+// var models = require('../models/user_model.js');
+// var user_model = models.user_model;
+// var club_model = models.club_model;
 var app = require('../app.js');
 
 //APIs
