@@ -1,7 +1,7 @@
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-var crud = require('../../models/crud.js');
-
+var crud = require('../../models/crud/crud.js');
+var Student = require('./student.js');
 
 var Authentication = function(){}
 
@@ -17,10 +17,14 @@ Authentication.prototype.getSigninType = function(userType, callback){
 }
 
 Authentication.prototype.signin = function(email, password, userType, callback){
-	var parameters = {email : email, password : password};
-	var response;
+	var response,
+		parameters = {email : email, password : password},
+		query = {
+			query : parameters,
+			options : {__v : 0}
+		}
 	Authentication.prototype.getSigninType(userType, function(modelName){
-		crud.read.readByParameter(modelName, parameters, function(data){
+		crud.read.readByParameter(modelName, query, function(data){
 			if(!data)
 			{
 				response = {
@@ -52,47 +56,8 @@ Authentication.prototype.signin = function(email, password, userType, callback){
 }
 
 Authentication.prototype.signup = function(email, password, username, firstName, lastName, university, currentCity, callback){
-	var userInfo;
-	var parameters = {
-		username : username,
-		firstName : firstName,
-		lastName : lastName,
-		university : university,	
-		currentCity : currentCity,
-		email : email,
-		password : password
-	};
-
-	crud.read.readByParameter('studentModel', parameters, function(data){
-		var response;
-		if(!data)
-		{
-			crud.create.createByParameter('studentModel', parameters , function(data){
-				response = {
-					error : null,
-					response : {
-						username : data.username,
-						firstName : firstName,
-						lastName : data.lastName,
-						link : data.link,
-						phoneNumber : data.phoneNumber,
-						university : data.university,
-						currentCity : data.currentCity,
-						clubsLeading : [data.clubsLeading],
-						email : data.email
-					}
-				};
-				callback(response);
-			});	
-		}
-		else
-		{
-			response = {
-				error : 'email already exists',
-				response : {}
-			};
-			callback(response);
-		}
+	Student.createAccount(email, password, username, firstName, lastName, university, currentCity, callback, function(response){
+		callback(response);
 	});
 }
 
