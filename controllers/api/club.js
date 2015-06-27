@@ -3,12 +3,17 @@ var crud = require('../../models/crud/crud.js');
 var Club = function(){}
 
 Club.prototype.addClub = function(clubName, universityAt, firstName, lastName, email, callback) {
-	var response;
-	var parameters = {
-		clubName: clubName,
-		universityAt: universityAt
-	};
-	crud.read.readByParameter('newClubRequestModel', parameters, function(data){
+	var response,
+		parameters = {
+			clubName: clubName,
+			universityAt: universityAt
+		},
+		query = {
+			query : parameters,
+			options : {__v : 0}
+		};
+
+	crud.read.readByParameter('newClubRequestModel', query, function(data){
 		if(!data)
 		{
 			parameters.leaders = [{firstName : firstName, lastName : lastName, email : email}];
@@ -34,12 +39,16 @@ Club.prototype.addClub = function(clubName, universityAt, firstName, lastName, e
 };
 
 Club.prototype.removeClub = function(clubName, universityAt, firstName, lastName, email, callback) {
-	var response;
-	var parameters = {
-		clubName: clubName,
-		universityAt: universityAt
-	};
-	crud.read.readByParameter('clubModel', parameters, function(data){
+	var response,
+		parameters = {
+			clubName: clubName,
+			universityAt: universityAt
+		},
+		query = {
+			query : parameters,
+			options : {__v : 0}
+		};
+	crud.read.readByParameter('clubModel', query, function(data){
 		if(data)
 		{
 			parameters.requester = {

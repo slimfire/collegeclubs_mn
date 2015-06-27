@@ -17,7 +17,11 @@ Comment.prototype.addComment = function(postId, comment, commenterFirstName, com
 };
 
 Comment.prototype.removeComment = function(postId, commentId, callback) {
-	crud.read.readByParameter('postModel', {_id : postId}, function(post){
+	var query = {
+		query : {_id : postId},
+		options : {__v : 0}
+	};
+	crud.read.readByParameter('postModel', query, function(post){
 		var doc = post.postBody.comments.id(commentId).remove();
 		post.save(function(err){
 			callback({status : 200});
@@ -26,8 +30,12 @@ Comment.prototype.removeComment = function(postId, commentId, callback) {
 };
 
 Comment.prototype.editComment = function(postId, commentId, comment, callback) {
-	var comments;
-	crud.read.readByParameter('postModel', {_id : postId}, function(post){
+	var comments,
+		query = {
+			query : {_id : postId},
+			options : {__v : 0}
+		};
+	crud.read.readByParameter('postModel', query, function(post){
 		var doc = post.postBody.comments.id(commentId);
 		doc.commentBody = comment;
 		post.save(function(doc){

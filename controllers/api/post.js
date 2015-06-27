@@ -3,8 +3,12 @@ var crud = require('../../models/crud/crud.js');
 var Post = function(){}
 
 Post.prototype.postNews = function(clubName, universityAt, news, firstName, lastName, callback){
-	var response;
-	crud.read.readByParameter('clubModel', {clubName : clubName}, function(response){
+	var response,
+		query = {
+			query : {clubName : clubName},
+			options : {__v : 0}
+		};
+	crud.read.readByParameter('clubModel', query, function(response){
 		if(response)
 		{
 			var parameters = {
@@ -58,4 +62,4 @@ Post.prototype.deleteNews = function(postId, callback){
 	});
 }
 
-module.exports = new post();
+module.exports = new Post();

@@ -3,13 +3,21 @@ var crud = require('../../models/crud/crud.js');
 var Admin = function(){}
 
 Admin.prototype.getClubRequests = function(callback){
-	crud.read.readByParameter('newClubRequestModel', {}, function(response){
+	var query = {
+		query : {},
+		options : {__v : 0}
+	};
+	crud.read.readByParameter('newClubRequestModel', query, function(response){
 		callback(response);
 	});
 }
 
 Admin.prototype.approveClubRequest = function(clubId, callback){
-	crud.read.readByParameter('newClubRequestModel', {_id : clubId}, function(response1){
+	var query = {
+		query : {_id : clubId},
+		options : {__v : 0}
+	};
+	crud.read.readByParameter('newClubRequestModel', query, function(response1){
 		if(response1)
 		{
 			crud.delete.deleteByParameter('newClubRequestModel', {_id : clubId}, function(response2){
