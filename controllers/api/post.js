@@ -44,4 +44,18 @@ Post.prototype.postNews = function(clubName, universityAt, news, firstName, last
 	});
 }
 
+Post.prototype.deleteNews = function(postId, callback){
+	crud.delete.deleteByParameter('postModel', {_id : postId}, function(response){
+		if(response)
+		{
+			callback({status : 200});
+		}
+		else
+		{
+			callback({status : 500});
+		}
+
+	});
+}
+
 module.exports = new post();
