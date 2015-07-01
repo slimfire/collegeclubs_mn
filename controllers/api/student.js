@@ -21,6 +21,8 @@ Student.prototype.createAccount = function(email, password, username, firstName,
 		var response;
 		if(!data)
 		{
+			query.query.link = null;
+			query.query.phoneNumber = null;
 			crud.create.createByParameter('studentModel', query.query , function(data){
 				response = {
 					error : null,
@@ -32,7 +34,7 @@ Student.prototype.createAccount = function(email, password, username, firstName,
 						phoneNumber : data.phoneNumber,
 						university : data.university,
 						currentCity : data.currentCity,
-						clubsLeading : [data.clubsLeading],
+						clubsLeading : data.clubsLeading,
 						email : data.email
 					}
 				};
@@ -65,8 +67,12 @@ Student.prototype.deleteAccount = function(email, callback){
 		if(accountInfo)
 		{
 			crud.delete.deleteByParameter('studentModel', {email : email}, function(response){
-				callback(response);
+				callback({status : 200, error : null});
 			});
+		}
+		else
+		{
+			callback({status : 500, error : 'Couldn\'t find account. Sorry Try again!'});
 		}
 	});
 }
