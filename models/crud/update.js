@@ -1,7 +1,7 @@
 var model = require('../model.js');
 
 var Update = function(){}
-//{'postBody.comments' : newData }
+
 Update.prototype.pushToSubDocument = function(modelName, query, update, callback){
 	model.get(modelName, function(model){
 		model.where(query)
