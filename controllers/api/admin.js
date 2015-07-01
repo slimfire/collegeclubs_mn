@@ -17,12 +17,12 @@ Admin.prototype.approveClubRequest = function(clubId, callback){
 		query : {_id : clubId},
 		options : {__v : 0}
 	};
-	crud.read.readByParameter('newClubRequestModel', query, function(response1){
-		if(response1)
+	crud.read.readByParameter('newClubRequestModel', query, function(club){
+		if(club)
 		{
-			crud.delete.deleteByParameter('newClubRequestModel', {_id : clubId}, function(response2){
-				crud.create.createByParameter('clubModel', response2, function(response3){
-					callback(response3);
+			crud.delete.deleteByParameter('newClubRequestModel', {_id : clubId}, function(deletedClub){
+				crud.create.createByParameter('clubModel', deletedClub, function(newClub){
+					callback(newClub);
 				});
 			});
 			
@@ -40,11 +40,11 @@ Admin.prototype.declineClubRequest = function(clubId, callback){
 		if(response)
 		{
 			console.log('delete');
-			callback(response);
+			callback({status : 200, error : null});
 		}
 		else
 		{
-			callback({error : 'club could not be found!'});
+			callback({status : 500, error : 'club could not be found!'});
 		}
 	});
 	
