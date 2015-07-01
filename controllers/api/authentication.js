@@ -55,8 +55,8 @@ Authentication.prototype.signin = function(email, password, userType, callback){
 	});
 }
 
-Authentication.prototype.signup = function(email, password, username, firstName, lastName, university, currentCity, callback){
-	Student.createAccount(email, password, username, firstName, lastName, university, currentCity, callback, function(response){
+Authentication.prototype.signup = function(credentials, callback){
+	Student.createAccount(credentials.email, credentials.password, credentials.username, credentials.firstName, credentials.lastName, credentials.university, credentials.currentCity, function(response){
 		callback(response);
 	});
 }
