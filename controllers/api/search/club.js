@@ -7,14 +7,17 @@ Club.prototype.getClubsInfo = function(callback){
 		query : {},
 		options : {__v : 0}
 	};
-	crud.read.readByParameter('clubModel', query , function(clubsInfo){
+	crud.read.readByParameter('clubModel', query, function(clubsInfo){
 		callback(clubsInfo);
 	});
 }
 
-Club.prototype.getClubInfo = function(club, universityAt, callback){
+Club.prototype.getClubInfo = function(clubName, universityAt, callback){
 	var query = {
-		query : {universityAt : universityAt},
+		query : {
+			clubName : clubName
+			universityAt : universityAt
+		},
 		options : {__v : 0}
 	};
 	crud.read.readByParameter('clubModel', query, function(clubInfo){
@@ -22,4 +25,13 @@ Club.prototype.getClubInfo = function(club, universityAt, callback){
 	});
 }
 
+Club.prototype.getSimilarClubs = function(clubName, callback){
+	var query = {
+		query : {clubName : clubName},
+		options : {__v : 0}
+	};
+	crud.read.readAll('clubModel', query, function(clubs){
+		callback(clubs);
+	});
+}
 module.exports = new Club();
