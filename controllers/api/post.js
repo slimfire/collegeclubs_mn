@@ -2,6 +2,19 @@ var crud = require('../../models/crud/crud.js');
 
 var Post = function(){}
 
+Post.prototype.ListNews = function(clubName, universityAt, callback){
+	var query = {
+		query : {
+			clubName : clubName,
+			universityAt : universityAt
+		},
+		options : { __v : 0 }
+	};
+	crud.read.readAll('postModel', query, function(posts){
+		callback(posts);
+	});
+}
+
 Post.prototype.postNews = function(clubName, universityAt, news, firstName, lastName, callback){
 	var response,
 		query = {
