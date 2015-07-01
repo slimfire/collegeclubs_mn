@@ -39,7 +39,7 @@ Comment.prototype.editComment = function(postId, commentId, comment, callback) {
 		var doc = post.postBody.comments.id(commentId);
 		doc.commentBody = comment;
 		post.save(function(doc){
-			callback({status : 200});
+			callback(comment);
 		});
 	});
 };
