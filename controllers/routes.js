@@ -28,7 +28,7 @@ exports.signUpResponseHandler = function(req, res) {
 //Student
 exports.getStudentInfoResponseHandler = function(req, res){
 	var email = req.body.email;
-	Api.search.getStudentInfo(email, function(studentInfo){
+	Api.search.student.getStudentInfo(email, function(studentInfo){
 		res.json(studentInfo);
 	});
 }
@@ -36,7 +36,7 @@ exports.getStudentInfoResponseHandler = function(req, res){
 exports.getClubInfoResponseHandler = function(req, res){
 	var clubName = req.body.clubName,
 		universityAt = req.body.universityAt;
-	Api.search.getClubInfo(clubName, universityAt, function(clubInfo){
+	Api.search.club.getClubInfo(clubName, universityAt, function(clubInfo){
 		res.json(clubInfo);
 	});
 }
@@ -44,7 +44,7 @@ exports.getClubInfoResponseHandler = function(req, res){
 exports.getSimilarClubsResponseHandler = function(req, res){
 	//student and club home view
 	var clubName = req.body.clubName;
-	Api.club.getSimilarClubs(clubName, function(clubs){
+	Api.search.club.getSimilarClubs(clubName, function(clubs){
 		res.json(clubs);
 	});
 }
@@ -66,13 +66,13 @@ exports.deleteAccount = function(req, res){
 
 // Admin
 exports.getAllClubsResponseHandler = function(req, res){
-	Api.club.getClubsInfo(function(clubs){
+	Api.search.club.getClubsInfo(function(clubs){
 		res.json(clubs);
 	});
 }
 
 exports.getAllStudentsResponseHandler = function(req, res){
-	Api.search.getStudentsInfo(function(students){
+	Api.search.student.getStudentsInfo(function(students){
 		res.json(students);
 	});
 }
@@ -161,7 +161,7 @@ exports.addCommentResponseHandler = function(req, res){
 exports.editCommentResponseHandler = function(req, res){
 	var postId = req.body.postId,
 		commentId = req.body.commentId
-		comment = req.body,comment;
+		comment = req.body.comment;
 	Api.comment.editComment(postId, commentId, comment, function(comment){
 		res.json(comment);
 	});
