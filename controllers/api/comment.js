@@ -12,7 +12,14 @@ Comment.prototype.addComment = function(postId, comment, commenterFirstName, com
 		dateAndTimeCommented : new Date().toString()
 	};
 	crud.update.pushToSubDocument('postModel', {_id : postId}, {'postBody.comments' : comment }, function(comment){
-		callback(comment);
+		if(comment == 1)
+		{
+			callback({status : 200});
+		}
+		else if(comment == 0)
+		{
+			callback({status : 500});
+		}
 	});
 };
 
