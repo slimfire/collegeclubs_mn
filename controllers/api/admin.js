@@ -7,7 +7,7 @@ Admin.prototype.getClubRequests = function(callback){
 		query : {},
 		options : {__v : 0}
 	};
-	crud.read.readByParameter('newClubRequestModel', query, function(response){
+	crud.read.readAll('newClubRequestModel', query, function(response){
 		callback(response);
 	});
 }
