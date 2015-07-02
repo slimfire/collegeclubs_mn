@@ -7,7 +7,7 @@ Student.prototype.getStudentsInfo = function(callback){
 		query : {},
 		options : {password : 0, __v : 0}
 	};
-	crud.read.readByParameter('studentModel', query, function(studentsInfo){
+	crud.read.readAll('studentModel', query, function(studentsInfo){
 		callback(studentsInfo);
 	});
 }
