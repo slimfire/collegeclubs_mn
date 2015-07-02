@@ -1,16 +1,15 @@
-var express = require('express');
-var connect = require('connect');
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');;
-var serveStatic = require('serve-static');
-var errorHandler = require('errorhandler');
-var routes = require('./routes/routes.js');
-var rest_api = require('./routes/rest_api.js');
-var app = express();
-var isSignedIn = false;
+var express = require('express'),
+	connect = require('connect'),
+	passport = require('passport'),
+	localStrategy = require('passport-local').Strategy,
+	mongoose = require('mongoose'),
+	bodyParser = require('body-parser'),
+	methodOverride = require('method-override'),
+	serveStatic = require('serve-static'),
+	errorHandler = require('errorhandler'),
+	routes = require('./controllers/routes.js'),
+	app = express();
+
 
 //configuration
 app.set('views', __dirname + '/views');
@@ -18,10 +17,7 @@ app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride());
-app.use(express.Router());
 app.use(serveStatic(__dirname + '/public_assets'));
-app.use(passport.initialize());
-app.use(passport.session());
 
 if('development' == app.get('env')){
 	app.use(errorHandler({dumpExceptions:true,showStack:true}));
@@ -30,155 +26,29 @@ if('production' == app.get('env')){
 	app.use(errorHandler());
 }
 
-//user authentication on sign in
-/*passport.use('signin_local_strategy', new localStrategy({usernameField: 'email'},
-	function(email,password,done){
-		user_model.findOne({email: email}, function(err, user){
-			if(err)
-				{
-					return(done(err));
-				}
-			if(!user)
-				{
-					return(done(null,false));
-				}
-			if(user.password != password)
-				{
-					return(done(null,false));
-				}
-			return(done(null,user));
-		});
-	}
-));*/
+app.post('/signin', routes.signInResponseHandler);
+app.post('/singup',routes.signUpResponseHandler);
+app.post('/student/getStudentInfo', routes.getStudentInfoResponseHandler);
+app.post('/club/getClubInfo', routes.getClubInfoResponseHandler);
+app.post('/club/getSimilarClubs', routes.getSimilarClubsResponseHandler);
+app.post('/student/getSimilarClubs', routes.getSimilarClubsResponseHandler);
+app.post('/student/updateAccountInfo', routes.updateAccountInfoResponseHandler);
+app.post('/student/deleteAccount', routes.deleteAccount);
+app.get('/club/getAllClubs', routes.getAllClubsResponseHandler);
+app.get('/student/getAllStudents', routes.getAllStudentsResponseHandler);
+app.get('/admin/getClubRequests', routes.getClubRequestsResponseHandler );
+app.post('/admin/approveClubRequest', routes.approveClubRequestResponseHandler);
+app.post('/admin/declineClubRequest', routes.declineClubRequestResponseHandler);
+app.post('/club/post/listNews', routes.listNewsResponseHandler);
+app.post('/club/addClub', routes.addClubResponseHandler);
+// app.post('/club/removeClub', routes.removeClubResponseHandler);//@TODO fix bugs on method
+app.post('/club/post/postNews', routes.postNewsResponseHandler);
+app.post('/club/post/deleteNews', routes.deleteNewsResponseHandler);
+app.post('/club/post/comment/addComment', routes.addCommentResponseHandler);
+app.post('/club/post/comment/editComment', routes.editCommentResponseHandler);
+app.post('/club/post/comment/removeComment', routes.removeCommentResponseHandler);
 
-//user authentication on sign up
-passport.use('signup_local_strategy',new localStrategy(
-	{passReqToCallback: true},
-	function(req, username, password, done)
-	{
-		user_model.findOne({email:req.body.email},function(err, user){
-			if(err)
-			{
-				return done(err);
-			}
-			if(user == null)
-			{
-				var new_user = new user_model({
-					username : req.body.username,
-					firstName : req.body.firstName,
-					lastName : req.body.lastName,
-					university : req.body.university,	
-					email : req.body.email,
-					hometown : req.body.hometown,
-					password : req.body.password
-				});
-				new_user.save(function(err){
-					if(err)
-					{
-						throw err;
-					}
-				});
-				user = new_user;    //Assigned the variable new_user to user to automatically serialize the new user.			
-				return(done(null, user));
-			}
-			if(user.email == req.body.email)
-				{
-					return(done(null, false));
-				}
-		});
-	}
-));
 
-var isAdmin = false;
-passport.use('admin_authentication_strategy', new localStrategy(
-	{usernameField: 'email'}, function(email, password, done){
-		admin_model.findOne({email: email}, function(err, user){
-			var username = "Admin";
-			if(err)
-			{
-				throw err;
-			}
-			if(user == null)
-			{
-				return(done(null, false));
-			}
-			if(user.email == email)
-			{
-				if(user.password == password)
-				{
-					isAdmin = true;
-					return(done(null, user));
-				}
-				return(done(null, false));
-			}
-		});
-	}
-));
-
-//serialize user and export the the user information so that the router updates the view
-// passport.serializeUser(function(user, done){
-// 	done(null, user.id);
-// 	exports.isSignedIn = true;
-// 	exports.isAdmin = isAdmin;
-// 	exports._id = user.id;
-// 	exports.firstName = user.firstName;
-// 	exports.lastName = user.lastName;
-// 	exports.email = user.email;
-// 	exports.username = user.username;
-// 	exports.university = user.university;
-// 	exports.hometown = user.hometown;
-// });
-
-//deserialize  user by quering user's document id
-passport.deserializeUser(function(id,done){
-	user_model.findById(id, function(err, user){
-		done(err,user);
-	})
-});
-
-//routes
-app.get('/', routes.indexResponseHandler);
-app.get('/signin', routes.signinResponseHandler);
-app.get('/signup', routes.signupResponseHandler);
-app.get('/signout', function(req, res){
-	req.logOut();
-	res.redirect('/');
-	exports.isSignedIn = false;
-	isAdmin = false;
-});
-app.get('/profile', routes.userProfileResponseHandler);
-app.get('/signin_error', routes.signinErrorResponseHandler);
-app.get('/signup_error', routes.signupErrorResponseHandler);
-app.get('/settings', routes.settingsResponseHandler);
-app.get('/admin', routes.adminSignInResponseHandler);
-app.get('/admin_index', routes.adminIndexResponseHandler);
-app.get('/requests', routes.clubRequestResponseHandler);
-app.get('/clubs_' + ':clubName', routes.clubProfileResponseHandler);
-app.post('/addNews', routes.addNewsResponseHandler);
-app.post('/signin',
-	passport.authenticate('signin_local_strategy', {successRedirect: '/profile',
-													failureRedirect: '/signin_error'
-}));
-
-app.post('/signup',
-	passport.authenticate('signup_local_strategy',
-		{successRedirect:'/profile',
-		 failureRedirect:'/signup_error'
-		}));
-
-app.post('/settings', routes.addClubResponseHandler);
-
-app.post('/admin', 
-	passport.authenticate('admin_authentication_strategy', {successRedirect: '/admin_index', 
-															failureRedirect: '/admin'}));
-
-//APIs
-app.get('/clubs', routes.clubsResponseHandler);
-app.get('/api/users', rest_api.getUsersResponseHandler);
-app.get('/api/users/:user_email', rest_api.getUserByEmailAddressResponseHandler);
-app.post('/api/create_user', rest_api.postUserResponseHandler);
-app.put('/api/change_username', rest_api.updateUsername);
-app.delete('/api/delete_user', rest_api.delete_user);
 
 app.listen(process.env.PORT || 3000, function(){
 	console.log('Magic happening on port 3000 :D . . . ');
