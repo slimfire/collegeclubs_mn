@@ -45,7 +45,7 @@ Authentication.prototype.signin = function(email, password, userType, callback){
 						phoneNumber : data.phoneNumber,
 						university : data.university,
 						currentCity : data.currentCity,
-						clubsLeading : [data.clubsLeading],
+						clubsLeading : data.clubsLeading,
 						email : data.email
 					}
 				};
