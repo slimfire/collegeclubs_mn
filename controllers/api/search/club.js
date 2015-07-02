@@ -7,7 +7,7 @@ Club.prototype.getClubsInfo = function(callback){
 		query : {},
 		options : {__v : 0}
 	};
-	crud.read.readByParameter('clubModel', query, function(clubsInfo){
+	crud.read.readAll('clubModel', query, function(clubsInfo){
 		callback(clubsInfo);
 	});
 }
@@ -15,7 +15,7 @@ Club.prototype.getClubsInfo = function(callback){
 Club.prototype.getClubInfo = function(clubName, universityAt, callback){
 	var query = {
 		query : {
-			clubName : clubName
+			clubName : clubName,
 			universityAt : universityAt
 		},
 		options : {__v : 0}
