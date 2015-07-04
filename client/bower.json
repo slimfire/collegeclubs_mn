@@ -1,0 +1,21 @@
+{
+  "name": "collegeclubs",
+  "version": "1.0.0",
+  "homepage": "http://collegeclubs.slimfire.io",
+  "authors": [
+    "Yohannes"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.1",
+    "angular-material": "~0.10.0",
+    "ui-router": "~0.2.15"
+  }
+}
