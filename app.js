@@ -8,16 +8,15 @@ var express = require('express'),
 	serveStatic = require('serve-static'),
 	errorHandler = require('errorhandler'),
 	routes = require('./controllers/routes.js'),
+	path = require('path'),
 	app = express();
 
 
 //configuration
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride());
-app.use(serveStatic(__dirname + '/public_assets'));
+app.use(serveStatic(path.join(__dirname, 'client')));
 
 if('development' == app.get('env')){
 	app.use(errorHandler({dumpExceptions:true,showStack:true}));
@@ -25,6 +24,10 @@ if('development' == app.get('env')){
 if('production' == app.get('env')){
 	app.use(errorHandler());
 }
+
+app.get('*', function(req, res){
+	res.sendFile(__dirname + '/client/app/index.html');
+});
 
 app.post('/signin', routes.signInResponseHandler);
 app.post('/singup',routes.signUpResponseHandler);
