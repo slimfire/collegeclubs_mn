@@ -1,14 +1,11 @@
 var express = require('express'),
 	connect = require('connect'),
-	passport = require('passport'),
-	localStrategy = require('passport-local').Strategy,
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
 	methodOverride = require('method-override'),
 	serveStatic = require('serve-static'),
 	errorHandler = require('errorhandler'),
 	routes = require('./controllers/routes.js'),
-	path = require('path'),
 	app = express();
 
 
