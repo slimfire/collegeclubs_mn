@@ -28,16 +28,18 @@ Authentication.prototype.signin = function(email, password, userType, callback){
 			if(!data)
 			{
 				response = {
-					error : 'entered wrong email or password',
-					response : {}
+					status : 500,
+					message : 'Entered wrong email or password!',
+					data : {}
 				};
 				callback(response);
 			}
 			else if(data.email == email && data.password === password)
 			{
 				response = {
-					error : null,
-					response : {
+					status : 200,
+					message : 'Successfully signed In!',
+					data : {
 						username : data.username,
 						firstName : data.firstName,
 						lastName : data.lastName,
