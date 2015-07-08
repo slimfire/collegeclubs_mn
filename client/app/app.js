@@ -1,11 +1,5 @@
 angular.module('collegeClubs', [
 	'collegeClubs.signin',
-	'ngMaterial',
-	'ui.router'
+	'collegeClubs.home',
+	'ngMaterial'
 	])
-	.config(function($stateProvider){
-		$stateProvider.state('collegeClubs', {
-			url : '/',
-			templateUrl : 'index.html'
-		})
-	})
