@@ -1,1 +1,11 @@
-<h1>Signin state</h1>
+<form class="signin" ng-controller="signinCtrl">
+	<md-input-container flex id="secondLayer">
+		<label>Email</label>
+		<input ng-model="email" type="email" required="required">
+	</md-input-container>
+	<md-input-container flex id="secondLayer">
+		<label>Password</label>
+		<input ng-model="password" type="password" required="required">
+	</md-input-container>
+	<md-button ng-click="signin(email, password, 'student')">Signin</md-button>
+</form>
