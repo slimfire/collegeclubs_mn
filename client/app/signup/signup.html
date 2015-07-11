@@ -1,0 +1,41 @@
+<form class="signup" ng-controller="signupCtrl as ctrl">
+	<div layout="row">
+		<md-input-container flex id="secondLayer">
+			<label>First name</label>
+			<input ng-model="firstName" required="required">
+		</md-input-container>
+		<md-input-container flex id="secondLayer">
+			<label>Last name</label>
+			<input ng-model="lastName" required="required">
+		</md-input-container>
+	</div>
+	<md-input-container flex id="secondLayer">
+		<label>Username</label>
+		<input ng-model="username" required="required">
+	</md-input-container>
+	<div layout="row">
+		<md-input-container flex id="secondLayer">
+			<label>Email</label>
+			<input ng-model="email" type="email" required="required">
+		</md-input-container>
+		<md-select placeholder="University" ng-model="university">
+			<md-option>Bemidji State University</md-option>
+			<md-option>Metropolitan State University</md-option>
+			<md-option>Minnesota State University, Moorhead</md-option>
+			<md-option>Minnesota State University, Mankato</md-option>
+			<md-option>Southwest State University</md-option>
+			<md-option>St. Cloud State University</md-option>
+			<md-option>Winona State University</md-option>
+		</md-select>
+	</div>
+	<md-input-container flex id="secondLayer">
+		<label>Password</label>
+		<input ng-model="password" type="password" required="required">
+	</md-input-container>
+	<md-input-container flex id="secondLayer">
+		<label>Repeate password</label>
+		<input ng-model="repeatePassword" type="password" required="required">
+	</md-input-container>
+	<md-button ng-click="signup(email, password, repeatePassword, username, firstName, lastName, university)">Signup</md-button>
+</form>
+
