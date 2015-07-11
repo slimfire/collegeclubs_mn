@@ -86,7 +86,7 @@ exports.getSimilarClubsResponseHandler = function(req, res){
 		{
 			response = {
 				status : 500,
-				message : 'No similar club found!',
+				message : 'No similar club(s) found!',
 				data : null
 			};
 			res.json(response);
