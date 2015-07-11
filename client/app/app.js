@@ -1,5 +1,6 @@
 angular.module('collegeClubs', [
-	'collegeClubs.signin',
 	'collegeClubs.home',
+	'collegeClubs.signin',
+	'collegeClubs.signup',
 	'ngMaterial'
 	])
