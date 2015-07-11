@@ -25,8 +25,9 @@ Student.prototype.createAccount = function(email, password, username, firstName,
 			query.query.phoneNumber = null;
 			crud.create.createByParameter('studentModel', query.query , function(data){
 				response = {
-					error : null,
-					response : {
+					status : 200,
+					message : 'Account was successfully created!',
+					data : {
 						username : data.username,
 						firstName : firstName,
 						lastName : data.lastName,
@@ -67,12 +68,12 @@ Student.prototype.deleteAccount = function(email, callback){
 		if(accountInfo)
 		{
 			crud.delete.deleteByParameter('studentModel', {email : email}, function(response){
-				callback({status : 200, error : null});
+				callback(response);
 			});
 		}
 		else
 		{
-			callback({status : 500, error : 'Couldn\'t find account. Sorry Try again!'});
+			callback(null);
 		}
 	});
 }

@@ -29,7 +29,7 @@ Admin.prototype.approveClubRequest = function(clubId, callback){
 		}
 		else
 		{
-			callback({error : 'couldn\'t find club :/'});
+			callback(null);
 		}
 	});
 	

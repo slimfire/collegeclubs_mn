@@ -18,22 +18,12 @@ Club.prototype.addClub = function(clubName, universityAt, firstName, lastName, e
 		{
 			parameters.leaders = [{firstName : firstName, lastName : lastName, email : email}];
 			crud.create.createByParameter('newClubRequestModel', parameters, function(data){
-				response = {
-					error : null,
-					response : {
-						clubInfo : data
-					}
-				}
-				callback(response);
+				callback(data);
 			});
 		}
 		else
 		{
-			response = {
-				error : 'club already exists',
-				response : {}
-			};
-			callback(response);
+			callback(null);
 		}
 	});
 };
@@ -48,17 +38,18 @@ Club.prototype.removeClub = function(clubName, universityAt, firstName, lastName
 			query : parameters,
 			options : {__v : 0}
 		};
-	crud.read.readByParameter('clubModel', query, function(data){
-		if(data)
+	crud.read.readByParameter('clubModel', query, function(clubs){
+		if(clubs)
 		{
 			parameters.requester = {
 				firstName : firstName, 
 				lastName : lastName,
 				email : email
 			};
-			crud.create('clubRemovalRequestModel', parameters, function(data){
-				if(data)
+			crud.create.createByParameter('clubRemovalRequestModel', parameters, function(club){
+				if(club)
 				{
+
 					response = {
 						error : null,
 						response : parameters
@@ -67,21 +58,13 @@ Club.prototype.removeClub = function(clubName, universityAt, firstName, lastName
 				}
 				else
 				{
-					response = {
-						error : 'club does not exists',
-						response : {}
-					};
-					callback(response);
+					callback(null);
 				}
 			});
 		}
 		else
 		{
-			response = {
-				error : 'club does not exist',
-				response : {}
-			}
-			callback(response);
+			callback(null);
 		}
 	});
 };

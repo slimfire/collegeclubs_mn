@@ -16,13 +16,12 @@ Post.prototype.ListNews = function(clubName, universityAt, callback){
 }
 
 Post.prototype.postNews = function(clubName, universityAt, news, firstName, lastName, callback){
-	var response,
-		query = {
+	var query = {
 			query : {clubName : clubName},
 			options : {__v : 0}
 		};
-	crud.read.readByParameter('clubModel', query, function(response){
-		if(response)
+	crud.read.readByParameter('clubModel', query, function(club){
+		if(club)
 		{
 			var parameters = {
 				clubName : clubName,
@@ -41,35 +40,26 @@ Post.prototype.postNews = function(clubName, universityAt, news, firstName, last
 					lastName : lastName
 				}
 			};
-			console.log(parameters);
-			crud.create.createByParameter('postModel', parameters, function(data){
-				response = {
-					error : null,
-					response : data
-				}
-				callback(response);
+			crud.create.createByParameter('postModel', parameters, function(post){
+				callback(post);
 			});
 		}
 		else
 		{
-			response = {
-				error : 'club profile you are trying to post on does not exist',
-				response : {}
-			};
-			callback(response);
+			callback(null);
 		}
 	});
 }
 
 Post.prototype.deleteNews = function(postId, callback){
-	crud.delete.deleteByParameter('postModel', {_id : postId}, function(response){
-		if(response)
+	crud.delete.deleteByParameter('postModel', {_id : postId}, function(post){
+		if(post)
 		{
-			callback({status : 200});
+			callback(post);
 		}
 		else
 		{
-			callback({status : 500});
+			callback(null);
 		}
 
 	});

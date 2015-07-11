@@ -14,11 +14,11 @@ Comment.prototype.addComment = function(postId, comment, commenterFirstName, com
 	crud.update.pushToSubDocument('postModel', {_id : postId}, {'postBody.comments' : comment }, function(comment){
 		if(comment == 1)
 		{
-			callback({status : 200});
+			callback(true);
 		}
 		else if(comment == 0)
 		{
-			callback({status : 500});
+			callback(null);
 		}
 	});
 };
@@ -30,8 +30,16 @@ Comment.prototype.removeComment = function(postId, commentId, callback) {
 	};
 	crud.read.readByParameter('postModel', query, function(post){
 		var doc = post.postBody.comments.id(commentId).remove();
-		post.save(function(err){
-			callback({status : 200});
+		post.save(function(error){
+			console.log(error);
+			if(error)
+			{
+				callback(null);
+			}
+			else
+			{
+				callback(true);
+			}
 		});
 	});
 };
@@ -45,8 +53,15 @@ Comment.prototype.editComment = function(postId, commentId, comment, callback) {
 	crud.read.readByParameter('postModel', query, function(post){
 		var doc = post.postBody.comments.id(commentId);
 		doc.commentBody = comment;
-		post.save(function(doc){
-			callback(comment);
+		post.save(function(error){
+			if(error)
+			{
+				callback(null);
+			}
+			else
+			{
+				callback(comment);
+			}
 		});
 	});
 };
