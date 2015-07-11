@@ -28,7 +28,7 @@ app.get('*', function(req, res){
 });
 
 app.post('/api/signin', routes.signInResponseHandler);
-app.post('/api/singup',routes.signUpResponseHandler);
+app.post('/api/signup',routes.signUpResponseHandler);
 app.post('/api/student/getStudentInfo', routes.getStudentInfoResponseHandler);
 app.post('/api/club/getClubInfo', routes.getClubInfoResponseHandler);
 app.post('/api/club/getSimilarClubs', routes.getSimilarClubsResponseHandler);
@@ -42,7 +42,7 @@ app.post('/api/admin/approveClubRequest', routes.approveClubRequestResponseHandl
 app.post('/api/admin/declineClubRequest', routes.declineClubRequestResponseHandler);
 app.post('/api/club/post/listNews', routes.listNewsResponseHandler);
 app.post('/api/club/addClub', routes.addClubResponseHandler);
-// app.post('/api/club/removeClub', routes.removeClubResponseHandler);//@TODO fix bugs on method
+app.post('/api/club/removeClub', routes.removeClubResponseHandler);
 app.post('/api/club/post/postNews', routes.postNewsResponseHandler);
 app.post('/api/club/post/deleteNews', routes.deleteNewsResponseHandler);
 app.post('/api/club/post/comment/addComment', routes.addCommentResponseHandler);
