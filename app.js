@@ -32,7 +32,6 @@ app.post('/api/signup',routes.signUpResponseHandler);
 app.post('/api/student/getStudentInfo', routes.getStudentInfoResponseHandler);
 app.post('/api/club/getClubInfo', routes.getClubInfoResponseHandler);
 app.post('/api/club/getSimilarClubs', routes.getSimilarClubsResponseHandler);
-app.post('/api/student/getSimilarClubs', routes.getSimilarClubsResponseHandler);
 app.post('/api/student/updateAccountInfo', routes.updateAccountInfoResponseHandler);
 app.post('/api/student/deleteAccount', routes.deleteAccount);
 app.get('/api/club/getAllClubs', routes.getAllClubsResponseHandler);
