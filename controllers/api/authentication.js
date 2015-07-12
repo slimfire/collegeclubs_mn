@@ -24,34 +24,14 @@ Authentication.prototype.signin = function(email, password, userType, callback){
 			options : {__v : 0}
 		}
 	Authentication.prototype.getSigninType(userType, function(modelName){
-		crud.read.readByParameter(modelName, query, function(data){
-			if(!data)
+		crud.read.readByParameter(modelName, query, function(account){
+			if(!account)
 			{
-				response = {
-					status : 500,
-					message : 'Entered wrong email or password!',
-					data : {}
-				};
-				callback(response);
+				callback(null);
 			}
-			else if(data.email == email && data.password === password)
+			else if(account.email == email && account.password === password)
 			{
-				response = {
-					status : 200,
-					message : 'Successfully signed In!',
-					data : {
-						username : data.username,
-						firstName : data.firstName,
-						lastName : data.lastName,
-						link : data.link,
-						phoneNumber : data.phoneNumber,
-						university : data.university,
-						currentCity : data.currentCity,
-						clubsLeading : data.clubsLeading,
-						email : data.email
-					}
-				};
-				callback(response);
+				callback(account);
 			}
 		});
 	});
