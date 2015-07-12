@@ -6,7 +6,24 @@ exports.signInResponseHandler = function(req, res) {
 		password = req.body.password,
 		authenticationType = req.body.authenticationType;
 	Api.authentication.signin(email, password, authenticationType, function(account){
-		res.json(account);
+		if(!account)
+		{
+			response = {
+				status : 500,
+				message : 'Entered wrong email or password!',
+				data : null
+			};
+			res.json(response);
+		}
+		else
+		{
+			response = {
+				status : 200,
+				message : 'Successfully signed In!',
+				data : account
+			};
+			res.json(response);
+		}
 	});
 }
 
@@ -21,7 +38,24 @@ exports.signUpResponseHandler = function(req, res) {
 		currentCity : req.body.currentCity
 	}
 	Api.authentication.signup(credentials, function(account){
-		res.json(account);
+		if(!account)
+		{
+			response = {
+				status : 500,
+				message : 'Email address is alread registered!',
+				data : null
+			};
+			res.json(response);
+		}
+		else
+		{
+			response = {
+				status : 200,
+				message : 'Account was successfully created!',
+				data : account
+			};
+			res.json(response);
+		}
 	});
 }
 
