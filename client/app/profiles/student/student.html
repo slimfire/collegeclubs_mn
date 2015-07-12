@@ -1,0 +1,18 @@
+<div ng-controller = "studentCtrl">
+	<div class = "studentInfo" ng-init = "getStudentInfo()">
+		<div class="profileImage"></div>
+		<div class="studentInfo" ng-if = "studentInfo.status == 200">
+			<ul ng-repeate = "(field, info) in studentInfo.data">
+				<li><b>{{field}}</b> {{info}}</li>
+			</ul>
+		</div>
+		<div class="studentInfo" ng-if = "studentInfo.status == 500">
+				<b>{{studentInfo.message}}</b>
+		</div>
+	</div>
+	<div class = "similarClubs" ng-init = "getSimilarClubs()">
+		<div ng-repeate = "clubs in similarClubs">
+
+		</div>
+	</div>
+</div>
