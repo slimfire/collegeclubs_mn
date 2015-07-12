@@ -18,37 +18,17 @@ Student.prototype.createAccount = function(email, password, username, firstName,
 	};
 
 	crud.read.readByParameter('studentModel', query, function(data){
-		var response;
 		if(!data)
 		{
 			query.query.link = null;
 			query.query.phoneNumber = null;
-			crud.create.createByParameter('studentModel', query.query , function(data){
-				response = {
-					status : 200,
-					message : 'Account was successfully created!',
-					data : {
-						username : data.username,
-						firstName : firstName,
-						lastName : data.lastName,
-						link : data.link,
-						phoneNumber : data.phoneNumber,
-						university : data.university,
-						currentCity : data.currentCity,
-						clubsLeading : data.clubsLeading,
-						email : data.email
-					}
-				};
-				callback(response);
+			crud.create.createByParameter('studentModel', query.query , function(account){
+				callback(account);
 			});	
 		}
 		else
 		{
-			response = {
-				error : 'email already exists',
-				response : {}
-			};
-			callback(response);
+			callback(null);
 		}
 	});
 }
