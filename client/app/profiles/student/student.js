@@ -3,29 +3,40 @@ angular.module('collegeClubs.profiles.student', [
 	'collegeClubs.profiles.student.service'
 	])
 	.config(function($urlRouterProvider, $stateProvider, $locationProvider){
-		$urlRouterProvider.otherwise('/');
-		$locationProvider.html5Mode(true);
-		$stateProvider.state('student', {
+		$stateProvider.state('studentProfile', {
 			url : '/profiles/student',
 			templateUrl : '/app/profiles/student/student.html',
 			controller : 'studentCtrl'
 		});
+		$urlRouterProvider.otherwise('/');
+		$locationProvider.html5Mode(true);
 	})
-	.controller('studentCtrl', function($scope, studentService){
-		$scope.studentInfoError = false;
-		$scope.getStudentInfo = function(email){
-			studentService.getStudentInfo(email)
+	.controller('studentCtrl', function($scope, $stateParams, studentService){
+		var errorResponse = {
+			status : 500,
+			message : 'Sorry, something went wrong. Our Engineers has been notified and the service would be available soon. Please try again!',
+			data : null
+		};
+		console.log("email ",$stateParams);
+		$scope.getStudentInfo = function(){
+			studentService.getStudentInfo($stateParams.email)
 				.then(function(success){
-					if(success.status == 200)
-					{
-						$scope.studentInfo = success.data;
-					}
-					else
-					{
-						$scope.studentInfoError = true;
-					}
+					$scope.studentInfo = success.data;
 				}, function(error){
-					$scope.studentInfoError = true;
+					$scope.studentInfo = errorResponse;
 				})
+		}
+
+		$scope.getSimilarClubs = function(){
+			$scope.similarClubs = [];
+			for(var club = 0; club < $stateParams.clubs; club++)
+			{
+				studentService.getSimilarClubs($stateParams.email, club)
+					.then(function(success){
+						$scope.similarClubs.push(success.data);
+					}, function(error){
+						$scope.similarClubs.push(errorResponse);
+					});
+			}
 		}
 	})
