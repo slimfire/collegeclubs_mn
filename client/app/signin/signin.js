@@ -3,7 +3,10 @@ angular.module('collegeClubs.signin', ['ui.router', 'collegeClubs.signin.service
 		$stateProvider.state('signin', {
 			url : '/signin',
 			templateUrl : '/app/signin/signin.html',
-			controller : 'signinCtrl'
+			controller : 'signinCtrl',
+			params : [	
+					'_id'
+					]
 		});
 		$urlRouterProvider.otherwise('/signin');
 		$locationProvider.html5Mode(true);
@@ -15,7 +18,7 @@ angular.module('collegeClubs.signin', ['ui.router', 'collegeClubs.signin.service
 					if(response.data.status == 200)
 					{
 						$scope.signinResponse = response.data.message;
-						$state.go('home', response.data.data); //change to user's home state
+						$state.go('studentProfile', response.data.data._id);
 					}
 					else if(response.data.status == 500)
 					{
