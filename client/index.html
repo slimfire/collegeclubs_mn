@@ -16,10 +16,16 @@
 	<script src = "/app/signup/signup.service.js"></script>
 	<script src = "/app/profiles/student/student.js"></script>
 	<script src = "/app/profiles/student/student.service.js"></script>
+	<script src = "/app/profiles/club/club.js"></script>
+	<script src = "/app/profiles/club/club.service.js"></script>
+	<script src = "/app/util/util.js" ></script>
+	<script src = "/app/util/toolbar/toolbar.js" ></script>
 	<link rel="stylesheet" type="text/css" href="/bower_components/angular-material/angular-material.css">
+	<link rel="stylesheet" href="/bower_components/fontawesome/css/font-awesome.css ">
 	<base href="/">
 </head>
 <body>
+	<div ng-include = "'app/util/toolbar/toolbar.html'"></div>
 	<div ui-view></div>
 </body>	
 </html>
