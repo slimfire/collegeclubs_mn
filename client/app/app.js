@@ -3,5 +3,6 @@ angular.module('collegeClubs', [
 	'collegeClubs.signin',
 	'collegeClubs.signup',
 	'collegeClubs.profiles',
+	'collegeClubs.util',
 	'ngMaterial'
 	])
