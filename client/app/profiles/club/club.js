@@ -8,28 +8,21 @@ angular.module('collegeClubs.profiles.club',[
 			templateUrl : '/app/profiles/club/club.html',
 			controller : 'clubCtrl',
 			params : {
-				username : null,
-				firstName : null,
-				lastName : null,
-				link : null,
-				phoneNumber : null,
-				university : null,
-				currentCity : null,
-				clubsLeading : null,
-				email : null
+				userInfo : null,
+				otherParams : null
 			}
 		});
 	})
-	.controller('clubCtrl',function($scope, clubService){
+	.controller('clubCtrl',function($scope, $stateParams, clubService){
 		$scope.response = {
-			success = {},
-			serviceError = {},
-			inputError = {}
+			success : {},
+			serviceError : {},
+			inputError : {}
 		};
 		var serviceErrorMessage = 'Sorry, something went wrong. Our Engineers has been notified and the service would be available soon. Please try again!';
-
-		$scope.listNews = function(clubName, universityAt){
-			clubService.news.listNews(clubName, universityAt)
+		console.log($stateParams);
+		$scope.listNews = function(){
+			clubService.news.listNews($stateParams.otherParams.clubName, $stateParams.otherParams.universityAt)
 				.then(function(success){
 					if(success.data.status == 200)
 					{
