@@ -16,6 +16,7 @@
   "dependencies": {
     "angular": "~1.4.1",
     "angular-material": "~0.10.0",
-    "ui-router": "~0.2.15"
+    "ui-router": "~0.2.15",
+    "fontawesome": "~4.3.0"
   }
 }
