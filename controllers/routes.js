@@ -351,7 +351,7 @@ exports.addClubResponseHandler = function(req, res){
 		{
 			response = {
 				status : 200,
-				message : 'Club request was successfully submitted. ' + club +' will be added on College Clubs MN soon, Thanks!',
+				message : 'Club request was successfully submitted. ' + club.clubName +' will be added on College Clubs MN soon, Thanks!',
 				data : club
 			};
 			res.json(response);
