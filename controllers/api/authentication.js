@@ -2,38 +2,26 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var crud = require('../../models/crud/crud.js');
 var Student = require('./student.js');
+var Utils = require('../utils/utils.js');
 
 var Authentication = function(){}
 
-Authentication.prototype.getSigninType = function(userType, callback){
-	if(userType == 'student')
-	{
-		callback('studentModel');
-	}
-	else if(userType == 'admin')
-	{
-		callback('adminModel');
-	}
-}
-
 Authentication.prototype.signin = function(email, password, userType, callback){
-	var response,
-		parameters = {email : email, password : password},
-		query = {
-			query : parameters,
+	var query = {
+			query : {email : email, password : password},
 			options : {__v : 0}
+		};
+	modelName = Utils.signinType.getSigninType(userType);
+	crud.read.readByParameter(modelName, query, function(account){
+		if(!account)
+		{
+			callback(null);
 		}
-	Authentication.prototype.getSigninType(userType, function(modelName){
-		crud.read.readByParameter(modelName, query, function(account){
-			if(!account)
-			{
-				callback(null);
-			}
-			else if(account.email == email && account.password === password)
-			{
-				callback(account);
-			}
-		});
+		else if(account.email == email && account.password === password)
+		{
+			account.password = null;
+			callback(account);
+		}
 	});
 }
 
