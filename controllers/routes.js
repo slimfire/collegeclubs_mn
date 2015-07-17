@@ -1,4 +1,5 @@
-var Api = require('./api/api.js');
+var Api = require('./api/api.js'),
+		Utils = require('./utils/utils.js');
 
 //Authentication
 exports.signInResponseHandler = function(req, res) {
@@ -29,14 +30,15 @@ exports.signInResponseHandler = function(req, res) {
 
 exports.signUpResponseHandler = function(req, res) {
 	var credentials = {
-		email : req.body.email,
-		password : req.body.password,
-		username : req.body.username,
-		firstName : req.body.firstName,
-		lastName : req.body.lastName,
-		university : req.body.university,
-		currentCity : req.body.currentCity
-	}
+				key : key,
+				email : req.body.email,
+				password : req.body.password,
+				username : req.body.username,
+				firstName : req.body.firstName,
+				lastName : req.body.lastName,
+				university : req.body.university,
+				currentCity : req.body.currentCity
+			};
 	Api.authentication.signup(credentials, function(account){
 		if(!account)
 		{
@@ -61,24 +63,41 @@ exports.signUpResponseHandler = function(req, res) {
 
 //Student
 exports.getStudentInfoResponseHandler = function(req, res){
-	var email = req.body.email,
-	response;
-	Api.search.student.getStudentInfo(email, function(studentInfo){
-		if(!studentInfo)
+	var response,
+			secret = req.body.secret,
+			authEmail = req.body.email,
+			reqEmail = req.body.data.email
+			data = JSON.stringify(req.body.data);
+	Utils.request.authenticateRequest(authEmail, secret, data, 'student', function(user){
+		if(user)
 		{
-			response = {
-				status : 500,
-				message : 'No student data was found!',
-				data : null
-			};
-			res.json(response);
+			Api.search.student.getStudentInfo(authEmail, function(studentInfo){
+				if(!studentInfo)
+				{
+					response = {
+						status : 500,
+						message : 'No student data was found!',
+						data : null
+					};
+					res.json(response);
+				}
+				else
+				{
+					response = {
+						status : 200,
+						message : 'Student data was found!',
+						data : studentInfo
+					};
+					res.json(response);
+				}
+			});
 		}
 		else
 		{
 			response = {
-				status : 200,
-				message : 'Student data was found!',
-				data : studentInfo
+				status : 500,
+				message : 'Access denied. Please signin to view this page!',
+				data : null
 			};
 			res.json(response);
 		}
@@ -86,9 +105,10 @@ exports.getStudentInfoResponseHandler = function(req, res){
 }
 
 exports.getClubInfoResponseHandler = function(req, res){
-	var clubName = req.body.clubName,
-		universityAt = req.body.universityAt,
-		response;
+	var clubName = req.body.data.clubName,
+			universityAt = req.body.data.universityAt,
+			token = req.body.token,
+			response;
 	Api.search.club.getClubInfo(clubName, universityAt, function(clubInfo){
 		if(!clubInfo)
 		{
@@ -113,8 +133,9 @@ exports.getClubInfoResponseHandler = function(req, res){
 
 exports.getSimilarClubsResponseHandler = function(req, res){
 	//student and club home view
-	var clubName = req.body.clubName,
-	response;
+	var clubName = req.body.data.clubName,
+			token = req.body.token,
+			response;
 	Api.search.club.getSimilarClubs(clubName, function(clubs){
 		if(!clubs)
 		{
@@ -138,8 +159,9 @@ exports.getSimilarClubsResponseHandler = function(req, res){
 }
 
 exports.updateAccountInfoResponseHandler = function(req, res){
-	var studentId = req.body.studentId,
-		update = req.body.update,
+	var studentId = req.body.data.studentId,
+		update = req.body.data.update,
+		token = req.body.token,
 		response;
 	Api.student.updateAccountInfo(studentId, update, function(upToDateAccountInfo){
 		if(!upToDateAccountInfo)
@@ -164,7 +186,8 @@ exports.updateAccountInfoResponseHandler = function(req, res){
 }
 
 exports.deleteAccount = function(req, res){
-	var email = req.body.email;
+	var email = req.body.data.email,
+			token = req.body.token;
 	Api.student.deleteAccount(email, function(status){
 		if(!status)
 		{
@@ -189,6 +212,7 @@ exports.deleteAccount = function(req, res){
 
 // Admin
 exports.getAllClubsResponseHandler = function(req, res){
+	var token = req.body.token;
 	Api.search.club.getClubsInfo(function(clubs){
 		if(!clubs)
 		{
