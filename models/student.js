@@ -3,6 +3,7 @@ var schema = mongoose.Schema;
 
 
 var studentSchema = new schema({
+	key : String,
 	username : String,
 	firstName : String,
 	lastName : String,
