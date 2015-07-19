@@ -1,0 +1,17 @@
+.signin{
+	padding: 10%;
+	text-align: center;
+}
+
+.title{
+	font-style: bold;
+}
+
+form{
+	padding-right: 30%;
+	padding-left: 30%;
+}
+
+input{
+	text-align: center;
+}
