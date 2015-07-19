@@ -10,34 +10,59 @@ angular.module('collegeClubs.signup', [
 			controller : 'signupCtrl'
 		});
 	})
-	.controller('signupCtrl', function($state, $scope, signupService){
-		var credentials;
+	.controller('signupCtrl', function($state, $scope, $cookieStore, signupService){
+		var params;
 		$scope.signup = function(email, password, repeatePassword, username, firstName, lastName, university){
+			$scope.signupResponse = {
+				error : false,
+				message : null,
+				data : null
+			}
 			if(password == repeatePassword)
 			{
-				credentials = {
-					email : email, 
-					password : password, 
-					username : username, 
-					firstName : firstName, 
-					lastName : lastName, 
-					university : university
+				params = {
+					secret : null,
+					authEmail : null,
+					data : {
+						email : email, 
+						password : password, 
+						username : username, 
+						firstName : firstName, 
+						lastName : lastName, 
+						university : university
+					}
 				};
-				signupService.signup(credentials)
+				signupService.signup(params)
 					.then(function(success){
-						console.log(success);
-						$signupResponse = success;
+						if(success.data.status == 200)
+						{
+							$cookieStore.put('collegeClubsKey', success.data.data.userInfo.key);
+							$cookieStore.put('collegeClubsKey', success.data.data.userInfo.email);
+							$state.go('studentProfile');
+						}
+						else
+						{
+							$scope.signupResponse = {
+								error : true,
+								data : {},
+								message : success.data.message
+							};
+						}
 					}, function(error){
 						console.log('Error : ', error);
-						$signupResponse = error;
+						$scope.signupResponse = {
+							error : true,
+							data : {},
+							message : 'Oops, something went wrong :( . Please try again !'
+						};
 					});
 			}
 			else
 			{
 				$scope.signupResponse = {
-					status : 500,
-					message : 'Entered password doesn\'t match repeated password.Please verify your password again.',
-					data : {}
+					error : true,
+					data : {},
+					message : 'Entered password doesn\'t match repeated password. Please verify your password again !'
 				};  
 			}
 		}
