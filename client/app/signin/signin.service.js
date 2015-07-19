@@ -3,11 +3,16 @@ angular.module('collegeClubs.signin.service', ['ui.router'])
 		var SigninFactory = function(){};
 
 		SigninFactory.prototype.signin = function(email, password, authenticationType){
-			return $http.post('/api/signin', {
-				email : email,
-				password : password,
-				authenticationType : authenticationType
-			});
+			var requestParams = {
+				secret : null,
+				email : null,
+				data : {
+					email : email,
+					password : password,
+					authenticationType : authenticationType
+				}
+			}
+			return $http.post('/api/signin', requestParams);
 		}
 		return new SigninFactory();
 	})
