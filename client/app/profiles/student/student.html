@@ -1,18 +1,32 @@
-<div ng-controller = "studentCtrl">
+<head>
+	<link rel="stylesheet" type="text/css" href="/app/profiles/student/student.css">
+</head>
+<div class = "student" ng-controller = "studentCtrl">
+	<div class="title">
+		Welcome, {{student}} !
+	</div>
 	<div class = "studentInfo" ng-init = "getStudentInfo()">
 		<div class="profileImage"></div>
-		<div class="studentInfo" ng-if = "studentInfo.status == 200">
-			<ul ng-repeate = "(field, info) in studentInfo.data">
-				<li><b>{{field}}</b> {{info}}</li>
+		
+		<div class="studentInfo" ng-if = "response.userInfo.success.getStudentInfo.status == 200">
+			<ul ng-repeate = "(field, info) in response.success.userInfo.data">
+				<li><b>{{field}}</b> {{info}}</li><br>
 			</ul>
 		</div>
-		<div class="studentInfo" ng-if = "studentInfo.status == 500">
-				<b>{{studentInfo.message}}</b>
+		<div class="studentInfo" ng-if = "response.success.userInfo.status == 500">
+				<b>{{response.success.userInfo.message}}</b>
 		</div>
 	</div>
 	<div class = "similarClubs" ng-init = "getSimilarClubs()">
-		<div ng-repeate = "clubs in similarClubs">
-
+		getSimilarClubs response : {{response}} <br><br>
+		<div ng-if="response.success.getSimilarClubs.length > 0" ng-repeate = "clubs in response.success.getSimilarClubs">
+			{{response.success.getSimilarClubs[$index]}} <br><br>
+		</div>
+		<div ng-if="response.inputError.getSimilarClubs.length > 0" ng-repeate = "clubs in response.inputError.getSimilarClubs">
+			{{clubs}},,,,{{response.inputError.getSimilarClubs[0]}} <br><br>
+		</div>
+		<div ng-if="response.serviceError.getSimilarClubs.length > 0" ng-repeate = "clubs in response.serviceError.getSimilarClubs">
+			{{response.serviceError.getSimilarClubs[$index]}} <br><br>
 		</div>
 	</div>
 </div>
