@@ -1,11 +1,22 @@
-<form class="signin" ng-controller="signinCtrl">
-	<md-input-container flex id="secondLayer">
-		<label>Email</label>
-		<input ng-model="email" type="email" required="required">
-	</md-input-container>
-	<md-input-container flex id="secondLayer">
-		<label>Password</label>
-		<input ng-model="password" type="password" required="required">
-	</md-input-container>
-	<md-button ng-click="signin(email, password, 'student')">Signin</md-button>
-</form>
+<head>
+	<link rel="stylesheet" type="text/css" href="/app/signin/signin.css">
+</head>
+<div class="signin" ng-controller="signinCtrl">
+	<h2 class="title">
+		Signin
+	</h2>
+	<div ng-show = "signinResponse.error">
+		<i>{{signinResponse.message}}</i>
+	</div>
+	<form>
+		<md-input-container flex>
+			<label>Email</label>
+			<input ng-model="email" type="email" required="required">
+		</md-input-container>
+		<md-input-container flex>
+			<label>Password</label>
+			<input ng-model="password" type="password" required="required">
+		</md-input-container>
+		<md-button ng-click="signin(email, password, 'student')" id="mdButton">Signin</md-button>
+	</form>
+</div>
