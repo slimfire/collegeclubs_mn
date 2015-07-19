@@ -1,0 +1,23 @@
+.student{
+	
+	text-align: center;
+	background-color: #FFFF9D;
+}
+
+.title{
+	font-style: bold;
+}
+
+form{
+	padding-right: 30%;
+	padding-left: 30%;
+}
+
+input, md-input-container{
+	text-align: center;
+}
+
+md-select{
+
+	width: 300px;
+}
