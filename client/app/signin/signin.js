@@ -1,4 +1,7 @@
-angular.module('collegeClubs.signin', ['ui.router', 'collegeClubs.signin.service'])
+angular.module('collegeClubs.signin', [
+		'ui.router',
+		'collegeClubs.signin.service'
+	])
 	.config(function($stateProvider, $locationProvider, $urlRouterProvider){
 		$stateProvider.state('signin', {
 			url : '/signin',
@@ -8,23 +11,37 @@ angular.module('collegeClubs.signin', ['ui.router', 'collegeClubs.signin.service
 		$urlRouterProvider.otherwise('/signin');
 		$locationProvider.html5Mode(true);
 	})
-	.controller('signinCtrl', function($scope, signinFactory, $state){
+	.controller('signinCtrl', function($scope, signinFactory, $state, $cookieStore){
 		$scope.signin = function(email, password, authenticationType){
+			$scope.signinResponse = {
+				error : false,
+				data : {},
+				message : null
+			};
 			signinFactory.signin(email, password, authenticationType)
-				.then(function(response){
-					if(response.data.status == 200)
+				.then(function(success){
+					if(success.data.status == 200)
 					{
-						$scope.signinResponse = response.data.message;
-						$state.go('studentProfile', response.data.data);
+						$cookieStore.put('collegeClubsKey', success.data.data.userInfo.key);
+						$cookieStore.put('collegeClubsKey', success.data.data.userInfo.email);
+						$state.go('studentProfile');
 					}
-					else if(response.data.status == 500)
+					else if(success.data.status == 500)
 					{
-						$scope.signinResponse = response.data.message;
+						$scope.signinResponse = {
+							error : true,
+							data : {},
+							message : success.data.message
+						};
 					}
 					
 				}, function(error){
 					console.log('error : ', error);
-					$scope.signinResponse = error;
+						$scope.signinResponse = {
+							error : true,
+							data : {},
+							message : 'Oops, something went wrong :( . Please try again !'
+						};
 				});
 		}
 	})
