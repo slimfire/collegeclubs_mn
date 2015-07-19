@@ -1,41 +1,45 @@
-<form class="signup" ng-controller="signupCtrl as ctrl">
-	<div layout="row">
-		<md-input-container flex id="secondLayer">
-			<label>First name</label>
-			<input ng-model="firstName" required="required">
-		</md-input-container>
-		<md-input-container flex id="secondLayer">
-			<label>Last name</label>
-			<input ng-model="lastName" required="required">
-		</md-input-container>
+<head>
+	<link rel="stylesheet" type="text/css" href="/app/signup/signup.css">
+</head>
+<div class="signup" ng-controller="signupCtrl">
+	<h2 class="title">
+		Signup
+	</h2>
+	<div ng-show="signupResponse.error">
+		<i>{{signupResponse.message}}</i>
 	</div>
-	<md-input-container flex id="secondLayer">
-		<label>Username</label>
-		<input ng-model="username" required="required">
-	</md-input-container>
-	<div layout="row">
-		<md-input-container flex id="secondLayer">
+	<form>
+		<div layout="row">
+			<md-input-container flex>
+				<label>First name</label>
+				<input ng-model="firstName" required="required">
+			</md-input-container>
+			<md-input-container flex>
+				<label>Last name</label>
+				<input ng-model="lastName" required="required">
+			</md-input-container>
+		</div>
+		<md-input-container flex>
+			<label>Username</label>
+			<input ng-model="username" required="required">
+		</md-input-container>
+		<md-input-container flex>
 			<label>Email</label>
 			<input ng-model="email" type="email" required="required">
+			<md-tooltip>
+	        	Please use your school email address!
+	      </md-tooltip>
 		</md-input-container>
-		<md-select placeholder="University" ng-model="university">
-			<md-option>Bemidji State University</md-option>
-			<md-option>Metropolitan State University</md-option>
-			<md-option>Minnesota State University, Moorhead</md-option>
-			<md-option>Minnesota State University, Mankato</md-option>
-			<md-option>Southwest State University</md-option>
-			<md-option>St. Cloud State University</md-option>
-			<md-option>Winona State University</md-option>
-		</md-select>
-	</div>
-	<md-input-container flex id="secondLayer">
-		<label>Password</label>
-		<input ng-model="password" type="password" required="required">
-	</md-input-container>
-	<md-input-container flex id="secondLayer">
-		<label>Repeate password</label>
-		<input ng-model="repeatePassword" type="password" required="required">
-	</md-input-container>
-	<md-button ng-click="signup(email, password, repeatePassword, username, firstName, lastName, university)">Signup</md-button>
-</form>
+		<md-input-container flex>
+			<label>Password</label>
+			<input ng-model="password" type="password" required="required">
+		</md-input-container>
+		<md-input-container flex>
+			<label>Repeate password</label>
+			<input ng-model="repeatePassword" type="password" required="required">
+		</md-input-container>
+		<md-button ng-click="signup(email, password, repeatePassword, username, firstName, lastName, university)" id="mdButton">Signup</md-button>
+	</form>
+</div>
+
 
