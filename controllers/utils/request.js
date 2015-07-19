@@ -1,5 +1,5 @@
 var crud = require('../../models/crud/crud.js'),
-	Token = require('./token.js');
+	Sha = require('./sha.js');
 
 var Request = function(){}
 
@@ -14,7 +14,7 @@ Request.prototype.authenticateRequest = function(email, secret, data, userType, 
 		crud.read.readByParameter('studentModel', query, function(account){
 			if(account)
 			{
-				if(Token.hash(account.key + data) == secret)
+				if(Sha.hash(account.key + data) == secret)
 				{
 					account.key = null;
 					callback(account);	
@@ -39,7 +39,7 @@ Request.prototype.authenticateRequest = function(email, secret, data, userType, 
 		crud.read.readByParameter('adminModel', query, function(account){
 			if(account)
 			{
-				if(Token.hash(account.key + data) == secret)
+				if(Sha.hash(account.key + data) == secret)
 				{
 					callback(account.email);	
 				}
