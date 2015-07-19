@@ -6,69 +6,72 @@ angular.module('collegeClubs.profiles.student', [
 		$stateProvider.state('studentProfile', {
 			url : '/profiles/student',
 			templateUrl : '/app/profiles/student/student.html',
-			controller : 'studentCtrl',
-			params : {
-				username : null,
-				firstName : null,
-				lastName : null,
-				link : null,
-				phoneNumber : null,
-				university : null,
-				currentCity : null,
-				clubsLeading : null,
-				email : null
-			}
+			controller : 'studentCtrl'
 		});
 		$urlRouterProvider.otherwise('/');
 		$locationProvider.html5Mode(true);
 	})
-	.controller('studentCtrl', function($scope, $stateParams, studentService){
+	.controller('studentCtrl', function($scope, $stateParams, $cookieStore, studentService){
 		$scope.response = {
-			success : {},
-			inputError : {},
-			serviceError : {}
+			getStudentInfoResponse : {
+				error : false,
+				data : {}
+				message : null
+			},
+			getSimilarClubsResponse : {
+				error : false,
+				data : {}
+				message : null
+			}
 		};
-		var errorResponse = {
-			status : 500,
-			message : 'Sorry, something went wrong. Our Engineers has been notified and the service would be available soon. Please try again!',
-			data : null
-		};
-		console.log($stateParams);
+		var key = $cookieStore.get('collegeClubsKey'),
+			email = $cookieStore.get('collegeClubsEmail'),
+			errorResponse = {
+				status : 500,
+				message : 'Sorry, something went wrong. Our Engineers has been notified and the service would be available soon. Please try again!',
+				data : null
+			};
 		$scope.getStudentInfo = function(){
-			studentService.getStudentInfo($stateParams.email)
+			if(!key || !email)
+			{
+				$state.go('signin');
+			}
+			studentService.getStudentInfo(email, key)
 				.then(function(success){
 					if(success.data.status == 200)
 					{
-						$scope.response.success.getStudentInfo = success.data.data;
+						$scope.response.getStudentInfoResponse.data = success.data.data;
+						$scope.response.getStudentInfoResponse.message = success.data.message;
 					}
 					else
 					{
-						$scope.response.inputError.getStudentInfo = success.data.message;	
+						$scope.response.getStudentInfoResponse.error = true;
+						$scope.response.getStudentInfoResponse.message = success.data.message;
 					}
 				}, function(error){
-					$scope.response.serviceError.getStudentInfo = error;
-				})
+						$scope.response.getStudentInfoResponse.error = true;
+						$scope.response.getStudentInfoResponse.message = success.data.message;
+				});
 		}
 
 		$scope.getSimilarClubs = function(){
-			$scope.response.success.getSimilarClubs = [];
-			$scope.response.inputError.getSimilarClubs = [];
-			$scope.response.serviceError.getSimilarClubs = [];
-			for(var club = 0; club < $stateParams.clubs; club++)
+			if(!key || !email)
 			{
-				studentService.getSimilarClubs($stateParams.email, club)
-					.then(function(success){
-						if(success.data.status == 200)
-						{
-							$scope.response.success.getSimilarClubs.push(success.data.data);
-						}
-						else
-						{
-							$scope.response.inputError.getSimilarClubs.push(success.data.message);	
-						}
-					}, function(error){
-						$scope.response.serviceError.getSimilarClubs.push(errorResponse.message);
-					});
+				$state.go('signin');
 			}
+			studentService.getSimilarClubs(email, club, key)
+				.then(function(success){
+					if(success.data.status == 200)
+					{
+						$scope.response.success.getSimilarClubs.push(success.data.data);
+					}
+					else
+					{
+						$scope.response.inputError.getSimilarClubs.push(success.data.message);	
+					}
+				}, function(error){
+					console.log("error", error)
+					$scope.response.serviceError.getSimilarClubs.push(errorResponse.message);
+				});
 		}
 	})
