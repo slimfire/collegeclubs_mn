@@ -2,24 +2,24 @@
   <md-fab-toolbar md-open="bar.isOpen" count="bar.count" ng-class="bar.selectedAlignment">
     <md-fab-trigger class="align-with-text">
       <md-button aria-label="menu" class="md-fab md-primary">
-        <md-icon md-font-icon="fa fa-bars fa-2x"></md-icon>
+        <md-icon md-font-icon="fa fa-bars fa-2x" class = "md-accent"></md-icon>
       </md-button>
     </md-fab-trigger>
-    <md-toolbar>
+    <md-toolbar class = "md-accent">
       <md-fab-actions class="md-toolbar-tools">
-        <md-icon md-font-icon="fa fa-bars fa-2x"></md-icon>
+        <md-icon md-font-icon="fa fa-bars fa-2x" class = "md-accent"></md-icon>
         <md-button ui-sref="home" aria-label="home" class="md-icon-button">
-          <md-icon md-font-icon="fa fa-home fa-2x"></md-icon>
+          <md-icon md-font-icon="fa fa-home fa-2x" class = "md-accent"></md-icon>
         </md-button>
         <md-button ui-sref="studentProfile" aria-label="user" class="md-icon-button">
-          <md-icon md-font-icon="fa fa-user fa-2x"></md-icon>
+          <md-icon md-font-icon="fa fa-user fa-2x" class = "md-accent"></md-icon>
         </md-button>
         <md-button ui-sref="clubProfile({otherParams : {clubName : clubName, universityAt : universityAt}, userInfo : 'someinfo object'})" aria-label="user" class="md-icon-button">
         <!-- @TODO -  ^pass state parameters when refering clubProfile state-->
-          <md-icon md-font-icon="fa fa-university fa-2x"></md-icon>
+          <md-icon md-font-icon="fa fa-university fa-2x" class = "md-accent"></md-icon>
         </md-button>
         <md-button aria-label="info" class="md-icon-button">
-          <md-icon md-font-icon="fa fa-info fa-2x"></md-icon>
+          <md-icon md-font-icon="fa fa-info fa-2x" class = "md-accent"></md-icon>
         </md-button>
       </md-fab-actions>
     </md-toolbar>
