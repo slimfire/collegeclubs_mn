@@ -48,8 +48,6 @@ app.post('/api/club/post/comment/addComment', routes.addCommentResponseHandler);
 app.post('/api/club/post/comment/editComment', routes.editCommentResponseHandler);
 app.post('/api/club/post/comment/removeComment', routes.removeCommentResponseHandler);
 
-
-
 app.listen(process.env.PORT || 3000, function(){
 	console.log('Magic happening on port 3000 :D . . . ');
 });
