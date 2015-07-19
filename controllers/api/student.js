@@ -17,14 +17,14 @@ Student.prototype.createAccount = function(email, password, username, firstName,
 			},
 			options : {__v : 0}
 	};
-	crud.read.readByParameter('studentModel', query, function(data){
+	crud.read.readByParameter('studentModel', {query : {email : email}, options : query.options}, function(data){
 		if(!data)
 		{
 			query.query.key = null;
 			query.query.link = null;
 			query.query.phoneNumber = null;
 			crud.create.createByParameter('studentModel', query.query , function(account){
-				key = Utils.token.hash(JSON.stringify(account._id));
+				key = Utils.sha.hash(JSON.stringify(account._id));
 				crud.update.replaceDocument('studentModel', {email : account.email}, {key : key}, function(account){
 					account.password = null;
 					callback(account);
