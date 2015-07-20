@@ -221,6 +221,7 @@ exports.updateAccountInfoResponseHandler = function(req, res){
 		update = req.body.data.update,
 		secret = req.body.secret,
 		authEmail = req.body.email,
+		userType = req.body.userType,
 		stringData = JSON.stringify(req.body.data),
 		response;
 	Utils.request.authenticateRequest(authEmail, secret, stringData, userType, function(account){
