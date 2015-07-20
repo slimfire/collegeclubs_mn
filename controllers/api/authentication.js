@@ -1,5 +1,3 @@
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
 var crud = require('../../models/crud/crud.js');
 var Student = require('./student.js');
 var Utils = require('../utils/utils.js');
