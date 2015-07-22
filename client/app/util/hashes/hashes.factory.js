@@ -4,7 +4,6 @@ angular.module('collegeClubs.util.hashes.factory', [])
 		var hashesFactory = function(){}
 
 		hashesFactory.prototype.sha256 = function(string){
-			console.log(string);
 			return SHA256.hex(string);
 		}
 
