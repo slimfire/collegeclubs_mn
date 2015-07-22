@@ -1,11 +1,14 @@
-.signup{
-	
-	text-align: center;
+.student{
+	padding: 5%;
 	background-color: #FFFF9D;
 }
 
 .title{
 	font-style: bold;
+}
+
+#name{
+	text-align: center;
 }
 
 form{
@@ -20,4 +23,20 @@ input, md-input-container{
 md-select{
 
 	width: 300px;
+}
+
+
+
+#studentInfo{
+	float: left;
+	max-width: 30%;
+	min-height: 100%;
+}
+
+#content{
+	margin-left : 32%;
+	min-height: 100%;
+}
+md-list{
+	background-color: #BEEB9F;
 }
