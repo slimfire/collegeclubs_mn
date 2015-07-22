@@ -23,7 +23,7 @@ angular.module('collegeClubs.signin', [
 					if(success.data.status == 200)
 					{
 						$cookieStore.put('collegeClubsKey', success.data.data.userInfo.key);
-						$cookieStore.put('collegeClubsKey', success.data.data.userInfo.email);
+						$cookieStore.put('collegeClubsEmail', success.data.data.userInfo.email);
 						$state.go('studentProfile');
 					}
 					else if(success.data.status == 500)
