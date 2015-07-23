@@ -26,7 +26,7 @@
 	        </div>
 	        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.link">
 	        	<md-icon class="fa fa-link"></md-icon>
-	          <md-button href="{{response.getStudentInfoResponse.data.userInfo.link}}">Link</md-button>
+	          <a href="{{response.getStudentInfoResponse.data.userInfo.link}}">Link</a>
 	        </div>
 	        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.phoneNumber">
 	        	<md-icon class="fa fa-phone"></md-icon>
@@ -45,7 +45,7 @@
 
 	<div class = "similarClubs" ng-init = "getSimilarClubs()">
 		<div class="md-whiteframe-z5" id="content">
-			<md-subheader class="md-primary">Similar clubs ?</md-subheader>
+			<md-subheader class="md-primary" id="content">Similar clubs ?</md-subheader>
 		  <md-content>
 		    <md-list ng-if="response.getSimilarClubsResponse.data.length > 0" ng-repeat = "club in response.getSimilarClubsResponse.data">
 		      <md-list-item class="md-3-line">
