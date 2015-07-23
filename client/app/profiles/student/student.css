@@ -25,11 +25,13 @@ md-select{
 	width: 300px;
 }
 
-
+md-icon{
+	margin-left: 5%; 
+}
 
 #studentInfo{
 	float: left;
-	max-width: 30%;
+	width: 30%;
 	min-height: 100%;
 }
 
@@ -41,7 +43,7 @@ md-list{
 	background-color: #BEEB9F;
 }
 
-md-subheader{
+#content{
 	background-color: #FF5722;
 	color: #FFFF8D;
 }
