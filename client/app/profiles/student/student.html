@@ -6,31 +6,35 @@
 	<div class="md-whiteframe-z5" id="studentInfo" ng-init = "getStudentInfo()">
 		<md-content class="studentInfo">
 	      <md-list>
+	      	<center>
+	      		<img ng-src="http://qph.is.quoracdn.net/main-thumb-10954719-200-yuueewhockgkguzreibwwuxraomeydcn.jpeg" class="md-avatar">
+	      	</center>
 	        <h2 class="md-list-item-text" id="name">
 	          {{response.getStudentInfoResponse.data.userInfo.username}}
 	        </h2>
 	        <h4 class="md-list-item-text" id="name">
 	          {{response.getStudentInfoResponse.data.userInfo.firstName}} {{response.getStudentInfoResponse.data.userInfo.lastName}}
 	        </h4>
+	        <md-divider ></md-divider>
 	        <div class="md-list-item-text">
-	        	<i class="fa fa-graduation-cap"></i>
+	        	<md-icon class="fa fa-university"></md-icon>
 	          {{response.getStudentInfoResponse.data.userInfo.university}}
 	        </div>
 	        <div class="md-list-item-text">
-	        	<i class="fa fa-home"></i>
+	        	<md-icon class="fa fa-map-marker"></md-icon>
 	          {{response.getStudentInfoResponse.data.userInfo.currentCity}}
 	        </div>
 	        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.link">
-	        	<i class="fa fa-link"></i>
-	          <a href="response.getStudentInfoResponse.data.userInfo.link">Link</a>
+	        	<md-icon class="fa fa-link"></md-icon>
+	          <a href="{{response.getStudentInfoResponse.data.userInfo.link}}">Link</a>
 	        </div>
 	        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.phoneNumber">
-	        	<i class="fa fa-phone"></i>
+	        	<md-icon class="fa fa-phone"></md-icon>
 	          {{response.getStudentInfoResponse.data.userInfo.phoneNumber}}
 	        </div>
 	        <div class="md-list-item-text">
-	        	<i class="fa fa-university"></i>
-	        	{{response.getStudentInfoResponse.data.userInfo.clubsLeading}}
+	        	<md-icon class="fa fa-users"></md-icon>
+	        		{{response.getStudentInfoResponse.data.userInfo.clubsLeading[0]}}
 	        </div>
 	      </md-list>
 		</md-content>
@@ -41,6 +45,7 @@
 
 	<div class = "similarClubs" ng-init = "getSimilarClubs()">
 		<div class="md-whiteframe-z5" id="content">
+			<md-subheader id= "hey"class="md-primary">Similar clubs ?</md-subheader>
 		  <md-content>
 		    <md-list ng-if="response.getSimilarClubsResponse.data.length > 0" ng-repeat = "club in response.getSimilarClubsResponse.data">
 		      <md-list-item class="md-3-line">
