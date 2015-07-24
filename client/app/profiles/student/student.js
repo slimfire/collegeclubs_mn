@@ -26,15 +26,16 @@ angular.module('collegeClubs.profiles.student', [
 		};
 		var key = $cookieStore.get('collegeClubsKey'),
 				email = $cookieStore.get('collegeClubsEmail'),
+				userType = $cookieStore.get('collegeClubsUserType'),
 				serviceErrorMessage = 'Sorry, something went wrong. Our Engineers has been notified and the service would be available soon. Please try again!';
 		$scope.getStudentInfo = function(){
-			if(!key || !email)
+			if(!key || !email || !userType)
 			{
 				$state.go('signin');
 			}
 			else
 			{
-				studentService.getStudentInfo(email, key)
+				studentService.getStudentInfo(email, key, userType)
 					.then(function(success){
 						if(success.data.status == 200)
 						{
@@ -54,19 +55,19 @@ angular.module('collegeClubs.profiles.student', [
 			}
 		}
 		$scope.getSimilarClubs = function(){
-			if(!key || !email)
+			if(!key || !email || !userType)
 			{
 				$state.go('signin');
 			}
 			else
 			{
-				studentService.getStudentInfo(email, key)
+				studentService.getStudentInfo(email, key, userType)
 					.then(function(getStudentInfoSuccess){
 						if(getStudentInfoSuccess.data.status == 200)
 						{
 							for(var i = 0; i < getStudentInfoSuccess.data.data.userInfo.clubsLeading.length; i++)
 							{
-								studentService.getSimilarClubs(email, getStudentInfoSuccess.data.data.userInfo.clubsLeading[i], key)
+								studentService.getSimilarClubs(email, getStudentInfoSuccess.data.data.userInfo.clubsLeading[i], key, userType)
 									.then(function(getSimilarClubsSuccess){
 										if(getSimilarClubsSuccess.data.status == 200)
 										{
