@@ -24,6 +24,7 @@ angular.module('collegeClubs.signin', [
 					{
 						$cookieStore.put('collegeClubsKey', success.data.data.userInfo.key);
 						$cookieStore.put('collegeClubsEmail', success.data.data.userInfo.email);
+						$cookieStore.put('collegeClubsUserType', success.data.data.userInfo.userType);
 						$state.go('studentProfile');
 					}
 					else if(success.data.status == 500)
