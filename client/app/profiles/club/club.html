@@ -1,9 +1,47 @@
-<div ng-init = "listNews()">
-	<div layout = "row">
-		<h1>{{clubName}} @ {{universityAt}}</h1>
-		<md-input-container md-no-float>
-			<input ng-model="news" placeholder="What's new at {{clubName}} ?" >
-		</md-input-container>
+<head>
+	<link rel="stylesheet" type="text/css" href="/app/profiles/club/club.css">
+</head>
+<div class = "club" ng-controller = "clubCtrl" ng-init = "listNews()">
+	<div class="title">
+		<md-subheader class="md-accent" id="title">{{response.listNewsResponse.data.response[0].clubName}} @ {{response.listNewsResponse.data.response[0].universityAt}}</md-subheader>
 	</div>
+	<form>
+		<md-input-container flex>
+	    <label>What's new @ {{response.listNewsResponse.data.response[0].clubName}} ?</label>
+	    <input ng-model="news" required="required">
+  	</md-input-container>
 
+  	<md-button ng-click="postNews(response.listNewsResponse.data.response[0].clubName, response.listNewsResponse.data.response[0].universityAt, news, response.listNewsResponse.data.userInfo.firstName, response.listNewsResponse.data.userInfo.lastName)">Post</md-button>
+	</form>
+  <md-content class="md-whiteframe-z5" id="content" ng-if="response.listNewsResponse.data.response.length > 0" ng-repeat = "post in response.listNewsResponse.data.response">
+  	<md-subheader class="md-accent" id="title">
+  		<div>{{post.posterName.firstName}} {{post.posterName.lastName}}</div>
+  		<div class="time">{{ post.dateAndTimePosted }}</div>
+  	</md-subheader>
+		<md-list layout="column" id="{{response.listNewsResponse.data.response[$index]._id}}" layout-padding>
+			<md-list-item id="{{response.listNewsResponse.data.response[$index]._id}}"><!--Post-->
+					<h3 class="md-list-item-text" id="{{response.listNewsResponse.data.response[$index]._id}}">
+						{{post.postBody.content}}
+					</h3>
+	        <md-divider ng-if="!$last"></md-divider>
+		  </md-list-item>
+		  <md-divider></md-divider>
+		  <md-list-item>
+	        <md-content class="comment" id="{{comment._id}}">
+	        		<span>Comments</span>
+			        <div class="md-list-item-text" ng-repeat="comment in post.postBody.comments"><!--Comments-->
+			          <h3>{{comment.commenterName.firstName}} {{comment.commenterName.lastName}}</h3>
+			          <h4 class="commentBody">{{comment.commentBody}}</h4>
+			          <div class="time">{{ comment.dateAndTimeCommented }}</div>
+			        </div>
+	        </md-content>
+	  	</md-list-item>
+		</md-list>
+  </md-content>
 </div>
+
+
+		    	
+
+
+
