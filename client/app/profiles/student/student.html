@@ -3,62 +3,66 @@
 </head>
 
 <div class = "student" ng-controller = "studentCtrl">
-	<div class="md-whiteframe-z5" id="studentInfo" ng-init = "getStudentInfo()">
-		<md-content class="studentInfo">
-	      <md-list>
-	      	<center>
-	      		<img ng-src="http://qph.is.quoracdn.net/main-thumb-10954719-200-yuueewhockgkguzreibwwuxraomeydcn.jpeg" class="md-avatar">
-	      	</center>
-	        <h2 class="md-list-item-text" id="name">
-	          {{response.getStudentInfoResponse.data.userInfo.username}}
-	        </h2>
-	        <h4 class="md-list-item-text" id="name">
-	          {{response.getStudentInfoResponse.data.userInfo.firstName}} {{response.getStudentInfoResponse.data.userInfo.lastName}}
-	        </h4>
-	        <md-divider ></md-divider>
-	        <div class="md-list-item-text">
-	        	<md-icon class="fa fa-university"></md-icon>
-	          {{response.getStudentInfoResponse.data.userInfo.university}}
-	        </div>
-	        <div class="md-list-item-text">
-	        	<md-icon class="fa fa-map-marker"></md-icon>
-	          {{response.getStudentInfoResponse.data.userInfo.currentCity}}
-	        </div>
-	        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.link">
-	        	<md-icon class="fa fa-link"></md-icon>
-	          <a href="{{response.getStudentInfoResponse.data.userInfo.link}}">Link</a>
-	        </div>
-	        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.phoneNumber">
-	        	<md-icon class="fa fa-phone"></md-icon>
-	          {{response.getStudentInfoResponse.data.userInfo.phoneNumber}}
-	        </div>
-	        <div class="md-list-item-text">
-	        	<md-icon class="fa fa-users"></md-icon>
-	        		{{response.getStudentInfoResponse.data.userInfo.clubsLeading[0]}}
-	        </div>
-	      </md-list>
-		</md-content>
-		<div class="studentInfo" ng-if = "response.success.userInfo.status == 500">
-				<b>{{response.success.userInfo.message}}</b>
-		</div>
+	<div class="loadingView" ng-show="loading">
+		<md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular>
 	</div>
-
-	<div class = "similarClubs" ng-init = "getSimilarClubs()">
-		<div class="md-whiteframe-z5" id="content">
-			<md-subheader class="md-primary" id="content">Similar clubs ?</md-subheader>
-		  <md-content>
-		    <md-list ng-if="response.getSimilarClubsResponse.data.length > 0" ng-repeat = "club in response.getSimilarClubsResponse.data">
-		      <md-list-item class="md-3-line">
-		        <div class="md-list-item-text" ng-repeat="info in club">
-		          <h3>{{info.clubName}}</h3>
-		          <h4> @ {{info.universityAt}}</h4>
-		          <p ng-repeat="leader in info.leaders"> {{leader.firstName}}  {{leader.lastName}}</p>
+	<div class="studentView" ng-hide="loading">
+		<div class="md-whiteframe-z5" id="studentInfo" ng-init = "getStudentInfo()">
+			<md-content class="studentInfo">
+		      <md-list>
+		      	<center>
+		      		<img ng-src="/images/user_icon.png" class="md-avatar">
+		      	</center>
+		        <h2 class="md-list-item-text" id="name">
+		          {{response.getStudentInfoResponse.data.userInfo.username}}
+		        </h2>
+		        <h4 class="md-list-item-text" id="name">
+		          {{response.getStudentInfoResponse.data.userInfo.firstName}} {{response.getStudentInfoResponse.data.userInfo.lastName}}
+		        </h4>
+		        <md-divider ></md-divider>
+		        <div class="md-list-item-text">
+		        	<md-icon class="fa fa-university"></md-icon>
+		          {{response.getStudentInfoResponse.data.userInfo.university}}
 		        </div>
-		        <md-divider ng-if="!$last"></md-divider>
-		      </md-list-item>
+		        <div class="md-list-item-text">
+		        	<md-icon class="fa fa-map-marker"></md-icon>
+		          {{response.getStudentInfoResponse.data.userInfo.currentCity}}
+		        </div>
+		        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.link">
+		        	<md-icon class="fa fa-link"></md-icon>
+		          <a href="{{response.getStudentInfoResponse.data.userInfo.link}}">Link</a>
+		        </div>
+		        <div class="md-list-item-text" ng-show="response.getStudentInfoResponse.data.userInfo.phoneNumber">
+		        	<md-icon class="fa fa-phone"></md-icon>
+		          {{response.getStudentInfoResponse.data.userInfo.phoneNumber}}
+		        </div>
+		        <div class="md-list-item-text">
+		        	<md-icon class="fa fa-users"></md-icon>
+		        		{{response.getStudentInfoResponse.data.userInfo.clubsLeading[0]}}
+		        </div>
+		      </md-list>
+			</md-content>
+			<div class="studentInfo" ng-if = "response.success.userInfo.status == 500">
+					<b>{{response.success.userInfo.message}}</b>
+			</div>
+		</div>
+		<div class = "similarClubs" ng-init = "getSimilarClubs()">
+			<div class="md-whiteframe-z5" id="content">
+				<md-subheader class="md-primary" id="content">Similar clubs ?</md-subheader>
+			  <md-content>
+			    <md-list ng-if="response.getSimilarClubsResponse.data.length > 0" ng-repeat = "club in response.getSimilarClubsResponse.data">
+			      <md-list-item class="md-3-line">
+			        <div class="md-list-item-text" ng-repeat="info in club">
+			          <h3>{{info.clubName}}</h3>
+			          <h4> @ {{info.universityAt}}</h4>
+			          <p ng-repeat="leader in info.leaders"> {{leader.firstName}}  {{leader.lastName}}</p>
+			        </div>
+			        <md-divider ng-if="!$last"></md-divider>
+			      </md-list-item>
 
-		    </md-list>
-		  </md-content>
+			    </md-list>
+			  </md-content>
+			</div>
 		</div>
 	</div>
 </div>
