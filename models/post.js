@@ -1,6 +1,15 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
+var comment = new schema({
+				commenterName : {
+					firstName : String,
+					lastName : String,			
+				},
+				commentBody : String,
+				dateAndTimeCommented : Date,
+			});
+
 var postSchema = new schema({
 		universityAt : String,
 		clubName : String,
@@ -11,14 +20,7 @@ var postSchema = new schema({
 		dateAndTimePosted : Date,
 		postBody : {
 			content : String,
-			comments : [{
-				commenterName : {
-					firstName : String,
-					lastName : String,			
-				},
-				commentBody : String,
-				dateAndTimeCommented : Date,
-			}]
+			comments : [comment]
 		}
 	}, {collection: 'posts'});
 
