@@ -1,5 +1,5 @@
 var crypto = require('crypto'),
-		crud = require('../../models/crud/crud.js');
+		crud = require('./crud/crud.js');
 
 var Sha = function(){}
 

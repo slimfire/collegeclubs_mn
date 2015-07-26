@@ -1,4 +1,4 @@
-var crud = require('../../models/crud/crud.js'),
+var crud = require('./crud/crud.js'),
 	Sha = require('./sha.js');
 
 var Request = function(){}
