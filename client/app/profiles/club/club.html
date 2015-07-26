@@ -2,42 +2,68 @@
 	<link rel="stylesheet" type="text/css" href="/app/profiles/club/club.css">
 </head>
 <div class = "club" ng-controller = "clubCtrl" ng-init = "listNews()">
-	<div class="title">
-		<md-subheader class="md-accent" id="title">{{response.listNewsResponse.data.response[0].clubName}} @ {{response.listNewsResponse.data.response[0].universityAt}}</md-subheader>
+	<div class="loadingView" ng-show="loading">
+		<md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular>
 	</div>
-	<form>
-		<md-input-container flex>
-	    <label>What's new @ {{response.listNewsResponse.data.response[0].clubName}} ?</label>
-	    <input ng-model="news" required="required">
-  	</md-input-container>
-
-  	<md-button ng-click="postNews(response.listNewsResponse.data.response[0].clubName, response.listNewsResponse.data.response[0].universityAt, news, response.listNewsResponse.data.userInfo.firstName, response.listNewsResponse.data.userInfo.lastName)">Post</md-button>
-	</form>
-  <md-content class="md-whiteframe-z5" id="content" ng-if="response.listNewsResponse.data.response.length > 0" ng-repeat = "post in response.listNewsResponse.data.response">
-  	<md-subheader class="md-accent" id="title">
-  		<div>{{post.posterName.firstName}} {{post.posterName.lastName}}</div>
-  		<div class="time">{{ post.dateAndTimePosted }}</div>
-  	</md-subheader>
-		<md-list layout="column" id="{{response.listNewsResponse.data.response[$index]._id}}" layout-padding>
-			<md-list-item id="{{response.listNewsResponse.data.response[$index]._id}}"><!--Post-->
-					<h3 class="md-list-item-text" id="{{response.listNewsResponse.data.response[$index]._id}}">
-						{{post.postBody.content}}
-					</h3>
-	        <md-divider ng-if="!$last"></md-divider>
-		  </md-list-item>
-		  <md-divider></md-divider>
-		  <md-list-item>
-	        <md-content class="comment" id="{{comment._id}}">
-	        		<span>Comments</span>
-			        <div class="md-list-item-text" ng-repeat="comment in post.postBody.comments"><!--Comments-->
-			          <h3>{{comment.commenterName.firstName}} {{comment.commenterName.lastName}}</h3>
-			          <h4 class="commentBody">{{comment.commentBody}}</h4>
-			          <div class="time">{{ comment.dateAndTimeCommented }}</div>
-			        </div>
-	        </md-content>
-	  	</md-list-item>
-		</md-list>
-  </md-content>
+	<div class="clubView" ng-hide="loading">
+		<div class="title">
+			<md-subheader class="md-accent" id="title">{{response.listNewsResponse.data.userInfo.clubsLeading[0]}} @ {{response.listNewsResponse.data.userInfo.university}}</md-subheader>
+		</div>
+		<form>
+			<md-input-container flex>
+		    <label>What's new @ {{response.listNewsResponse.data.userInfo.clubsLeading[0]}} ?</label>
+		    <textarea ng-model="news" required="required"></textarea>
+			</md-input-container>
+			<md-button id="mdButton" ng-click="postNews(response.listNewsResponse.data.userInfo.clubsLeading[0], response.listNewsResponse.data.userInfo.university, news, response.listNewsResponse.data.userInfo.firstName, response.listNewsResponse.data.userInfo.lastName)">Post</md-button>
+		</form>
+		<md-content class="md-whiteframe-z5" id="content" ng-if="response.listNewsResponse.data.response.length > 0" ng-repeat = "post in response.listNewsResponse.data.response">
+			<md-subheader class="md-accent" id="title">
+				<div>by <b>{{post.posterName.firstName}} {{post.posterName.lastName}}</b></div>
+				<div class="time">{{ post.dateAndTimePosted }}</div>
+			</md-subheader>
+			<md-list layout="column" id="{{response.listNewsResponse.data.response[$index]._id}}" layout-padding>
+				<md-list-item id="{{response.listNewsResponse.data.response[$index]._id}}"><!--Post-->
+						<h3 class="md-list-item-text" id="{{response.listNewsResponse.data.response[$index]._id}}">
+							{{post.postBody.content}}
+						</h3>
+		        <md-divider ng-if="!$last"></md-divider>
+			  </md-list-item>
+			  <md-divider></md-divider>
+			  <md-list-item>
+		        <md-content class="comments" id="{{comment._id}}">
+		        		<span>Comments</span>
+				        <div ng-repeat="comment in post.postBody.comments"><!--Comments-->
+				          <h3>
+				          	{{comment.commenterName.firstName}} {{comment.commenterName.lastName}}
+				          </h3>
+				          
+				          	<div class="commentBody">
+				          		{{comment.commentBody}}
+				          	</div>
+				          	<div class="commentRemove">
+						          <md-button class="md-icon-button md-accent" id="icon" aria-label="Favorite" ng-click="removeComment(post._id, comment._id)">
+								      	<md-icon class="fa fa-times fa-2x" id="mdIcon"></md-icon>
+								      </md-button>
+				          	</div>
+				          
+				          <div class="time">
+					          {{ comment.dateAndTimeCommented }}
+					          <hr>
+				          </div>
+				          
+				        </div>
+		        </md-content>
+		  	</md-list-item>
+				<form>
+					<md-input-container flex>
+				    <label class="fa fa-comments"> Any thoughts ?</label>
+				    <textarea ng-model="comment" required="required"></textarea>
+			  	</md-input-container>
+			  	<md-button id="mdButton" ng-click="addComment(post._id,  comment, response.listNewsResponse.data.userInfo.firstName, response.listNewsResponse.data.userInfo.lastName)">Comment</md-button>
+				</form>
+			</md-list>
+		</md-content>
+	</div>
 </div>
 
 
