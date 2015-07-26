@@ -1,4 +1,4 @@
-var crud = require('../../models/crud/crud.js');
+var crud = require('../utils/crud/crud.js');
 
 var Club = function(){}
 

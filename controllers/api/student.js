@@ -1,4 +1,4 @@
-var crud = require('../../models/crud/crud.js'),
+var crud = require('../utils/crud/crud.js'),
 		Utils = require('../utils/utils.js');
 
 var Student = function(){}
