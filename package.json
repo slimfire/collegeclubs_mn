@@ -6,7 +6,8 @@
     "node": ">=0.10.3"
   },
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "start": "node app.js",
+    "postinstall": "./client bower install"
   },
   "dependencies": {
     "body-parser": "^1.9.2",
