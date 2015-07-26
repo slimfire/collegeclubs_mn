@@ -10,7 +10,7 @@ angular.module('collegeClubs.profiles.club',[
 			controller : 'clubCtrl'
 		});
 	})
-	.controller('clubCtrl',function($scope, $state, $cookieStore, clubService, studentService){
+	.controller('clubCtrl',function($scope, $window, $state, $cookieStore, clubService, studentService){
 		var key = $cookieStore.get('collegeClubsKey'),
 			email = $cookieStore.get('collegeClubsEmail'),
 			userType = $cookieStore.get('collegeClubsUserType'),
@@ -72,6 +72,7 @@ angular.module('collegeClubs.profiles.club',[
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.postNewsResponse.message = serviceErrorMessage;
 				})
+				$window.location.reload();
 		}
 
 		$scope.deleteNews = function(postId){
@@ -90,6 +91,7 @@ angular.module('collegeClubs.profiles.club',[
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.deleteNewsResponse.message = serviceErrorMessage;
 				})
+				$window.location.reload();
 		}
 
 		$scope.addComment = function(postId, comment, commenterFirstName, commenterLastName){
@@ -108,6 +110,7 @@ angular.module('collegeClubs.profiles.club',[
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.addCommentResponse.message = serviceErrorMessage;
 				})
+				$window.location.reload();
 		}
 
 		$scope.editComment = function(postId, commentId, comment){
@@ -126,6 +129,7 @@ angular.module('collegeClubs.profiles.club',[
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.editCommentResponse.message = serviceErrorMessage;
 				})
+				$window.location.reload();
 		}
 
 		$scope.removeComment = function(postId, commentId){
@@ -145,5 +149,6 @@ angular.module('collegeClubs.profiles.club',[
 					$scope.response.removeCommentResponse.error = true;
 					$scope.response.removeCommentResponse.message = serviceErrorMessage;
 				})
+				$window.location.reload();
 		}
 	});
