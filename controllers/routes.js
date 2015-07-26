@@ -1,9 +1,12 @@
 var mongoose = require('mongoose'),
 		Api = require('./api/api.js'),
 		Utils = require('./utils/utils.js'),
+		constants = require('./constants.js'),
+		successMessages = constants.messages.success,
+		errorMessages = constants.messages.error,
 		authenticationErrorResponse = {
 			status : 500,
-			message : 'Access denied. Please signin to view this page!',
+			message : errorMessages.ACCESS_DENIED,
 			data : {
 				userInfo : null,
 				response : null
@@ -20,7 +23,7 @@ exports.signInResponseHandler = function(req, res) {
 		{
 			response = {
 				status : 500,
-				message : 'Entered wrong email or password!',
+				message : errorMessages.WRONG_EMAIL,
 				data : {
 					userInfo : null,
 					response : null
@@ -32,7 +35,7 @@ exports.signInResponseHandler = function(req, res) {
 		{
 			response = {
 				status : 200,
-				message : 'Successfully signed In!',
+				message : successMessages.SIGNED_IN,
 				data : {
 					userInfo : account,
 					response : account
@@ -58,7 +61,7 @@ exports.signUpResponseHandler = function(req, res) {
 		{
 			response = {
 				status : 500,
-				message : 'Email address is already registered!',
+				message : errorMessages.EMAIL_EXISTS,
 				data : {
 					userInfo : null,
 					response : null
@@ -70,7 +73,7 @@ exports.signUpResponseHandler = function(req, res) {
 		{
 			response = {
 				status : 200,
-				message : 'Account was successfully created!',
+				message : successMessages.SIGNED_UP,
 				data : {
 					userInfo : account,
 					response : account
@@ -89,7 +92,7 @@ exports.getStudentInfoResponseHandler = function(req, res){
 			userType = req.body.userType,
 			reqEmail = req.body.data.email
 			data = JSON.stringify(req.body.data);
-	Utils.request.authenticateRequest(authEmail, secret, data, 'student', function(account){
+	Utils.request.authenticateRequest(authEmail, secret, data, userType, function(account){
 		if(account)
 		{
 			Api.search.student.getStudentInfo(reqEmail, function(studentInfo){
@@ -97,7 +100,7 @@ exports.getStudentInfoResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'No student data was found!',
+						message : errorMessages.NO_STUDENT_FOUND,
 						data : {
 							userInfo : account,
 							response : null
@@ -109,7 +112,7 @@ exports.getStudentInfoResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Student data was found!',
+						message : successMessages.STUDENT_FOUND,
 						data : {
 							userInfo : account,
 							response : studentInfo
@@ -142,7 +145,7 @@ exports.getClubInfoResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'No club found by ' + clubName + ' at ' + universityAt + '.',
+						message : errorMessages.NO_CLUB_FOUND,
 						data : {
 							userInfo : account,
 							response : null
@@ -154,7 +157,7 @@ exports.getClubInfoResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club information was found!',
+						message : successMessages.CLUB_FOUND,
 						data : {
 							userInfo : account,
 							response : clubInfo
@@ -187,7 +190,7 @@ exports.getSimilarClubsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'No similar club(s) found!',
+						message : errorMessages.NO_SIMILAR_CLUBS,
 						data : {
 							userInfo : account,
 							response : null
@@ -199,7 +202,7 @@ exports.getSimilarClubsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Similar club(s) found!',
+						message : successMessages.SIMILAR_CLUBS_FOUND,
 						data : {
 							userInfo : account,
 							response : clubs
@@ -232,7 +235,7 @@ exports.updateAccountInfoResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Account failed to be updated!',
+						message : errorMessages.CAN_NOT_UPDATE_ACCOUNT,
 						data : {
 							userInfo : account,
 							response : null
@@ -244,7 +247,7 @@ exports.updateAccountInfoResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Account information updated!',
+						message : successMessages.ACCOUNT_UPDATED,
 						data : {
 							userInfo : account,
 							response : upToDateAccountInfo
@@ -275,7 +278,7 @@ exports.deleteAccount = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Account did not get deleted!',
+						message : errorMessages.ACCOUNT_NOT_AVAILABLE,
 						data : {
 							userInfo : account,
 							response : null
@@ -287,7 +290,7 @@ exports.deleteAccount = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Account deleted!',
+						message : successMessages.ACCOUNT_DELETED,
 						data : {
 							userInfo : account,
 							response : status
@@ -318,7 +321,7 @@ exports.getAllClubsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'No clubs were not found!',
+						message : errorMessages.NO_CLUBS_FOUND,
 						data : {
 							userInfo : account,
 							response : null
@@ -330,7 +333,7 @@ exports.getAllClubsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club(s) found!',
+						message : successMessages.CLUBS_FOUND,
 						data : {
 							userInfo : account,
 							response : clubs
@@ -360,7 +363,7 @@ exports.getAllStudentsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Students were not found!',
+						message : errorMessages.NO_STUDENTS_FOUND,
 						data : {
 							userInfo : account,
 							response : null
@@ -372,7 +375,7 @@ exports.getAllStudentsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Student(s) found!',
+						message : successMessages.STUDENTS_FOUND,
 						data : students
 					};
 					res.json(response);
@@ -399,7 +402,7 @@ exports.getClubRequestsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Club requests were not found!',
+						message : errorMessages.NO_CLUB_REQUESTS_FOUND,
 						data : {
 							userInfo : account,
 							response : null
@@ -411,7 +414,7 @@ exports.getClubRequestsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club requests(s) found!',
+						message : successMessages.CLUB_REQUESTS_FOUND,
 						data : {
 							userInfo : account,
 							response : requests
@@ -443,7 +446,7 @@ exports.approveClubRequestResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Club request approval was not successful!',
+						message : errorMessages.CLUB_REQUESTS_NOT_APPROVED,
 						data : {
 							userInfo : account,
 							response : null
@@ -455,7 +458,7 @@ exports.approveClubRequestResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club request was successfully approved!',
+						message : successMessages.CLUB_REQUEST_APPROVED,
 						data : {
 							userInfo : account,
 							response : club
@@ -487,7 +490,7 @@ exports.declineClubRequestResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Club request approval was not successful!',
+						message : errorMessages.CLUB_REQUESTS_NOT_DECLINED,
 						data : {
 							userInfo : null,
 							response : null
@@ -499,7 +502,7 @@ exports.declineClubRequestResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club request was successfully approved!',
+						message : successMessages.CLUB_REQUEST_DECLINED,
 						data : {
 							userInfo : account,
 							response : status
@@ -532,7 +535,7 @@ exports.listNewsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Sorry, no new was found!',
+						message : errorMessages.NEWS_NOT_FOUND,
 						data : {
 							userInfo : account,
 							response : null
@@ -544,7 +547,7 @@ exports.listNewsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Posts were found!',
+						message : successMessages.POSTS_FOUND,
 						data : {
 							userInfo : account,
 							response : news
@@ -579,7 +582,7 @@ exports.addClubResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Club already exists!',
+						message : errorMessages.CLUB_EXISTS,
 						data : {
 							userInfo : account,
 							response : null
@@ -591,7 +594,7 @@ exports.addClubResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club request was successfully submitted. ' + club.clubName +' will be added on College Clubs MN soon, Thanks!',
+						message : successMessages.CLUB_ADDED,
 						data : {
 							userInfo : account,
 							response : club
@@ -626,7 +629,7 @@ exports.removeClubResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Club does not exists!',
+						message : errorMessages.CLUB_DOES_NOT_EXIST,
 						data : {
 							userInfo : account,
 							response : null
@@ -638,7 +641,7 @@ exports.removeClubResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Club removal request was successfully submitted. ' + club +' will be removed from College Clubs MN soon, Thanks!',
+						message : successMessages.CLUB_REMOVED,
 						data : {
 							userInfo : account,
 							response : club
@@ -673,7 +676,7 @@ exports.postNewsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Entered club does not exists!',
+						message : errorMessages.CLUB_DOES_NOT_EXIST,
 						data : {
 							userInfo : account,
 							response : null
@@ -685,7 +688,7 @@ exports.postNewsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'New successfully posted!',
+						message : successMessages.NEWS_POSTED,
 						data : {
 							userInfo : account,
 							response : post
@@ -716,7 +719,7 @@ exports.deleteNewsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Entered post id does not exists!',
+						message : errorMessages.POST_ID_DOES_NOT_EXIST,
 						data : {
 							userInfo : account,
 							response : null
@@ -728,7 +731,7 @@ exports.deleteNewsResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Post was successfully removed from !' + post.clubName + ' at ' + post.universityAt + '.',
+						message : successMessages.POST_REMOVED,
 						data : {
 							userInfo : account,
 							response : post
@@ -762,7 +765,7 @@ exports.addCommentResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Error occured while adding comment!',
+						message : errorMessages.CAN_NOT_ADD_COMMENT,
 						data : {
 							userInfo : account,
 							response : null
@@ -774,7 +777,7 @@ exports.addCommentResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Comment was successfully added!',
+						message : successMessages.COMMENT_ADDED,
 						data : {
 							userInfo : account,
 							response : comment
@@ -807,7 +810,7 @@ exports.editCommentResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Error occured while updating comment!',
+						message : errorMessages.CAN_NOT_UPDATE_COMMENT,
 						data : {
 							userInfo : account,
 							response : null
@@ -819,7 +822,7 @@ exports.editCommentResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Comment was successfully updated!',
+						message : successMessages.COMMENT_UPDATED,
 						data : {
 							userInfo : account,
 							response : comment
@@ -851,7 +854,7 @@ exports.removeCommentResponseHandler = function(req, res){
 				{
 					response = {
 						status : 500,
-						message : 'Error occured while removing comment!',
+						message : errorMessages.CAN_NOT_DELETE_COMMENT,
 						data : {
 							userInfo : account,
 							response : null
@@ -863,7 +866,7 @@ exports.removeCommentResponseHandler = function(req, res){
 				{
 					response = {
 						status : 200,
-						message : 'Comment was successfully removed!',
+						message : successMessages.COMMENT_REMOVED,
 						data : {
 							userInfo : account,
 							response : comment
