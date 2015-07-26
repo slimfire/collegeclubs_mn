@@ -1,3 +1,8 @@
+.student .loadingView{
+	padding-top: 10%;
+	padding-left: 50%;
+}
+
 .student{
 	padding: 5%;
 	background-color: #FFFF9D;
@@ -5,6 +10,11 @@
 
 .title{
 	font-style: bold;
+}
+
+img{
+	width: 25%;
+	height: 25%;
 }
 
 #name{
