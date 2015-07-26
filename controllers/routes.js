@@ -1,4 +1,5 @@
-var Api = require('./api/api.js'),
+var mongoose = require('mongoose'),
+		Api = require('./api/api.js'),
 		Utils = require('./utils/utils.js'),
 		authenticationErrorResponse = {
 			status : 500,
@@ -840,12 +841,13 @@ exports.removeCommentResponseHandler = function(req, res){
 	var postId = req.body.data.postId,
 			commentId = req.body.data.commentId
 			authEmail = req.body.email,
+			secret = req.body.secret,
 			userType = req.body.userType,
 			stringData = JSON.stringify(req.body.data);
 	Utils.request.authenticateRequest(authEmail, secret, stringData, userType, function(account){
 		if(account)
 		{
-			Api.comment.removeComment(postId, commentId, function(status){
+			Api.comment.removeComment(postId, commentId, function(comment){
 				if(!comment)
 				{
 					response = {
