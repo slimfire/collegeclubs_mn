@@ -39,16 +39,11 @@ angular.module('collegeClubs.profiles.student', [
 				studentService.getStudentInfo(email, key, userType)
 					.then(function(success){
 						$scope.loading = false;
-						if(success.data.status == 200)
-						{
-							$scope.response.getStudentInfoResponse.data = success.data.data;
-							$scope.response.getStudentInfoResponse.message = success.data.message;
-							console.log($scope.response.getStudentInfoResponse.data)
-						}
-						else
+						$scope.response.getStudentInfoResponse.data = success.data.data;
+						$scope.response.getStudentInfoResponse.message = success.data.message;
+						if(success.data.status == 500)
 						{
 							$scope.response.getStudentInfoResponse.error = true;
-							$scope.response.getStudentInfoResponse.message = success.data.message;
 						}
 					}, function(error){
 							$scope.response.getStudentInfoResponse.error = true;
@@ -72,16 +67,11 @@ angular.module('collegeClubs.profiles.student', [
 								studentService.getSimilarClubs(email, getStudentInfoSuccess.data.data.userInfo.clubsLeading[i], key, userType)
 									.then(function(getSimilarClubsSuccess){
 										$scope.loading = false;
-										if(getSimilarClubsSuccess.data.status == 200)
-										{
-											$scope.response.getSimilarClubsResponse.data.push(getSimilarClubsSuccess.data.data.response);
-											$scope.response.getSimilarClubsResponse.messages.push(getSimilarClubsSuccess.data.message);
-											console.log($scope.response.getSimilarClubsResponse.data);
-										}
-										else
+										$scope.response.getSimilarClubsResponse.data.push(getSimilarClubsSuccess.data.data.response);
+										$scope.response.getSimilarClubsResponse.messages.push(getSimilarClubsSuccess.data.message);
+										if(getSimilarClubsSuccess.data.status == 500)
 										{
 											$scope.response.getSimilarClubsResponse.error = true;
-											$scope.response.getSimilarClubsResponse.messages.push(getSimilarClubsSuccess.data.message);
 										}
 									},function(getSimilarClubsError){
 											$scope.response.getSimilarClubsResponse.error = true;
