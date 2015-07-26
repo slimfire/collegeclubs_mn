@@ -1,4 +1,4 @@
-var crud = require('../utils/crud/crud.js');
+var crud = require('../utils/utils.js').crud;
 
 var Post = function(){}
 
