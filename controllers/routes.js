@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
 		Api = require('./api/api.js'),
 		Utils = require('./utils/utils.js'),
-		constants = require('./constants.js'),
+		constants = require('./utils/constants.js'),
 		successMessages = constants.messages.success,
 		errorMessages = constants.messages.error,
 		authenticationErrorResponse = {
