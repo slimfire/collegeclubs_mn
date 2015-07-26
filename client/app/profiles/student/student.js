@@ -12,6 +12,7 @@ angular.module('collegeClubs.profiles.student', [
 		$locationProvider.html5Mode(true);
 	})
 	.controller('studentCtrl', function($scope, $state, $cookieStore, studentService){
+		$scope.loading = true;
 		$scope.response = {
 			getStudentInfoResponse : {
 				error : false,
@@ -37,6 +38,7 @@ angular.module('collegeClubs.profiles.student', [
 			{
 				studentService.getStudentInfo(email, key, userType)
 					.then(function(success){
+						$scope.loading = false;
 						if(success.data.status == 200)
 						{
 							$scope.response.getStudentInfoResponse.data = success.data.data;
@@ -69,6 +71,7 @@ angular.module('collegeClubs.profiles.student', [
 							{
 								studentService.getSimilarClubs(email, getStudentInfoSuccess.data.data.userInfo.clubsLeading[i], key, userType)
 									.then(function(getSimilarClubsSuccess){
+										$scope.loading = false;
 										if(getSimilarClubsSuccess.data.status == 200)
 										{
 											$scope.response.getSimilarClubsResponse.data.push(getSimilarClubsSuccess.data.data.response);
