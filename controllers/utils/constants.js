@@ -28,7 +28,9 @@ module.exports = {
 			POST_ID_DOES_NOT_EXIST : 'Entered post id does not exists!',
 			CAN_NOT_ADD_COMMENT : 'Error occured while adding comment!',
 			CAN_NOT_UPDATE_COMMENT : 'Error occured while updating comment!',
-			CAN_NOT_DELETE_COMMENT : 'Error occured while removing comment!'
+			CAN_NOT_DELETE_COMMENT : 'Error occured while removing comment!',
+			MODEL_NOT_FOUND : 'Error : The model name you are looking is not available. Check the spelling.'
+
 		},
 		success : {
 			SIGNED_IN : 'Successfully signed In!',
