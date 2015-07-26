@@ -1,0 +1,86 @@
+.club .loadingView{
+	padding-top: 10%;
+	padding-left: 50%;
+}
+
+.club{
+	padding: 5%;
+	background-color: #FFFF9D;
+}
+
+.title{
+	font-style: bold;
+}
+
+#name{
+	text-align: center;
+}
+
+.comment, .commentBody{
+	padding-left: 2%;
+}
+
+.commentBody{
+	font-weight: normal;
+	width: 100%;
+}
+
+.time{
+	text-align: right;
+	font-size: 65%;
+}
+
+input, md-input-container{
+	text-align: center;
+}
+form{
+	text-align: center;
+}
+md-select{
+
+	width: 300px;
+}
+
+#mdButton{
+	background-color: #FF6138;
+	color: #FFFF9D;
+}
+
+#mdIcon{
+	color: #FF6138;
+}
+
+#title{
+	width: 100%;
+	background-color: #00A388;
+	font-style: bold;
+}
+
+md-list{
+	background-color: #BEEB9F;
+}
+
+#content{
+	background-color: #FF5722;
+	
+}
+hr{
+	min-width: 100%;
+}
+.commentBody{
+	float: left;
+  width: 93%;
+}
+
+.commentRemove{
+	margin-left: 93%;
+}
+
+.comment{
+	display: inline;
+}
+
+.comments{
+	background-color: #BEEB9F;
+	width: 100%;
+}
