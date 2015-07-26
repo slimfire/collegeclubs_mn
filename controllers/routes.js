@@ -12,7 +12,6 @@ var mongoose = require('mongoose'),
 
 //Authentication
 exports.signInResponseHandler = function(req, res) {
-	console.log(req.body);
 	var email = req.body.data.email,
 		password = req.body.data.password,
 		authenticationType = req.body.data.authenticationType;
