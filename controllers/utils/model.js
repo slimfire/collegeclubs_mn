@@ -1,35 +1,36 @@
-var models = require('../../models/models.js');
+var models = require('../../models/models.js'),
+	constants = require('./constants.js');
 
 var Model = function(){}
 
 Model.prototype.get = function(modelName, callback){
-	if(modelName == 'clubModel')
+	if(modelName == constants.models.CLUB_MODEL)
 	{
 		callback(models.clubModel);
 	}
-	else if(modelName == 'adminModel')
+	else if(modelName == constants.models.ADMIN_MODEL)
 	{
 		callback(models.adminModel);	
 	}
-	else if(modelName == 'studentModel')
+	else if(modelName == constants.models.STUDENT_MODEL )
 	{
 		callback(models.studentModel);	
 	}
-	else if(modelName == 'newClubRequestModel')
+	else if(modelName == constants.models.NEW_CLUB_REQUEST_MODEL )
 	{
 		callback(models.newClubRequestModel);	
 	}
-	else if(modelName == 'clubRemovalRequestModel')
+	else if(modelName == constants.models.CLUB_REMOVAL_REQUEST_MODEL )
 	{
 		callback(models.clubRemovalRequestModel);	
 	}
-	else if(modelName == 'postModel')
+	else if(modelName == constants.models.POST_MODEL )
 	{
 		callback(models.postModel);	
 	}	
 	else
 	{
-		callback("Error : The model name you are looking is not available. Check the spelling.");
+		callback(constants.models.MODEL_NOT_FOUND);
 	}
 }
 
