@@ -10,7 +10,7 @@ angular.module('collegeClubs.profiles.club',[
 			controller : 'clubCtrl'
 		});
 	})
-	.controller('clubCtrl',function($scope, $cookieStore, clubService, studentService){
+	.controller('clubCtrl',function($scope, $state, $cookieStore, clubService, studentService){
 		var key = $cookieStore.get('collegeClubsKey'),
 			email = $cookieStore.get('collegeClubsEmail'),
 			userType = $cookieStore.get('collegeClubsUserType'),
@@ -21,6 +21,7 @@ angular.module('collegeClubs.profiles.club',[
 		}
 		var responseObjects = ['listNewsResponse', 'postNewsResponse', 'deleteNewsResponse', 'addCommentResponse', 'editCommentResponse', 'removeCommentResponse'];
 		$scope.response = {};
+		$scope.loading = true;
 		for(var i = 0; i < responseObjects.length; i++)
 		{
 			$scope.response[responseObjects[i]] = {
@@ -29,9 +30,6 @@ angular.module('collegeClubs.profiles.club',[
 				message : null
 			}
 		}
-		$scope.hey = function($event){
-			console.log($event.target.parentNode.id);
-		}
 		$scope.listNews = function(){
 			studentService.getStudentInfo(email, key, userType)
 				.then(function(response){
@@ -39,12 +37,9 @@ angular.module('collegeClubs.profiles.club',[
 							universityAt = response.data.data.response.university;
 					clubService.news.listNews(club, universityAt, userType, email, key)
 						.then(function(response){
-							if(response.data.status == 200)
-							{
-								$scope.response.listNewsResponse.data = response.data.data.response;
-								console.log("listNews : ", $scope.response.listNewsResponse.data)
-							}
-							else if(response.data.status == 500)
+							$scope.loading = false;
+							$scope.response.listNewsResponse.data = response.data.data;
+							if(response.data.status == 500)
 							{
 								$scope.response.listNewsResponse.error = true;
 								$scope.response.listNewsResponse.message = response.data.message;
@@ -55,6 +50,7 @@ angular.module('collegeClubs.profiles.club',[
 							$scope.response.listNewsResponse.message = serviceErrorMessage;
 						})	
 				}, function(error){
+					$scope.loading = false;
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.listNewsResponse.message = serviceErrorMessage;
 				})
@@ -63,17 +59,16 @@ angular.module('collegeClubs.profiles.club',[
 		$scope.postNews = function(clubName, universityAt, news, firstName, lastName){
 			clubService.news.postNews(clubName, universityAt, news, firstName, lastName, userType, email, key)
 				.then(function(response){
-					if(response.data.status == 200)
-					{
-						$scope.response.postNewsResponse.data = response.data.data;
-					}
-					else if(response.data.status == 500)
+					$scope.loading = false;
+					$scope.response.postNewsResponse.data = response.data.data;
+					if(response.data.status == 500)
 					{
 						$scope.response.listNewsResponse.error = true;
 						$scope.response.postNewsResponse.message = response.data.message;
 					}
 				}, function(error){
 					console.log(error);
+					$scope.loading = false;
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.postNewsResponse.message = serviceErrorMessage;
 				})
@@ -82,16 +77,15 @@ angular.module('collegeClubs.profiles.club',[
 		$scope.deleteNews = function(postId){
 			clubService.news.deleteNews(postId, userType, email, key)
 				.then(function(response){
-					if(response.data.status == 200)
-					{
-						$scope.response.deleteNewsResponse.deleteNews = response.data.data;
-					}
-					else if(response.data.status == 500)
+					$scope.loading = false;
+					$scope.response.deleteNewsResponse.deleteNews = response.data.data;
+					if(response.data.status == 500)
 					{
 						$scope.response.listNewsResponse.error = true;
 						$scope.response.deleteNewsResponse.message = response.data.message;
 					}
 				}, function(error){
+					$scope.loading = false;
 					console.log(error);
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.deleteNewsResponse.message = serviceErrorMessage;
@@ -99,18 +93,17 @@ angular.module('collegeClubs.profiles.club',[
 		}
 
 		$scope.addComment = function(postId, comment, commenterFirstName, commenterLastName){
-			clubService.comment.addComment(postId, userType, email, key)
+			clubService.comment.addComment(postId, comment, commenterFirstName, commenterLastName, userType, email, key)
 				.then(function(response){
-					if(success.data.status == 200)
-					{
-						$scope.response.addCommentResponse.data = response.data.data;
-					}
-					else if(response.data.status == 500)
+					$scope.loading = false;
+					$scope.response.addCommentResponse.data = response.data.data;
+					if(response.data.status == 500)
 					{
 						$scope.response.listNewsResponse.error = true;
 						$scope.response.addCommentResponse.message = response.data.message;
 					}
 				}, function(error){
+					$scope.loading = false;
 					console.log(error);
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.addCommentResponse.message = serviceErrorMessage;
@@ -120,16 +113,15 @@ angular.module('collegeClubs.profiles.club',[
 		$scope.editComment = function(postId, commentId, comment){
 			clubService.comment.editComment(postId, userType, email, key)
 				.then(function(response){
-					if(success.data.status == 200)
-					{
-						$scope.response.editCommentResponse.data = response.data.data;
-					}
-					else if(response.data.status == 500)
+					$scope.loading = false;
+					$scope.response.editCommentResponse.data = response.data.data;
+					if(response.data.status == 500)
 					{
 						$scope.response.listNewsResponse.error = true;
 						$scope.response.editCommentResponse.message = response.data.message;
 					}
 				}, function(error){
+					$scope.loading = false;
 					console.log(error);
 					$scope.response.listNewsResponse.error = true;
 					$scope.response.editCommentResponse.message = serviceErrorMessage;
@@ -137,18 +129,18 @@ angular.module('collegeClubs.profiles.club',[
 		}
 
 		$scope.removeComment = function(postId, commentId){
-			clubService.comment.removeComment(postId, userType, email, key)
+			console.log(key)
+			clubService.comment.removeComment(postId, commentId, userType, email, key)
 				.then(function(response){
-					if(response.data.status == 200)
-					{
-						$scope.response.removeCommentResponse.data = response.data.data;
-					}
-					else if(response.data.status == 500)
+					$scope.loading = false;
+					$scope.response.removeCommentResponse.data = response.data.data;
+					if(response.data.status == 500)
 					{
 						$scope.response.listNewsResponse.error = true;
 						$scope.response.removeCommentResponse.message = response.data.message;
 					}
 				}, function(error){
+					$scope.loading = false;
 					console.log(error);
 					$scope.response.removeCommentResponse.error = true;
 					$scope.response.removeCommentResponse.message = serviceErrorMessage;
